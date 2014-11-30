@@ -1,6 +1,6 @@
 organization  := "com.example"
 
-version       := "0.1"
+version       := "0.0.1"
 
 scalaVersion  := "2.11.2"
 
@@ -12,6 +12,7 @@ libraryDependencies ++= {
   Seq(
     "io.spray"            %%  "spray-can"     % sprayV,
     "io.spray"            %%  "spray-routing" % sprayV,
+    "io.spray"            %%  "spray-json"    % "1.3.1",
     "io.spray"            %%  "spray-testkit" % sprayV  % "test",
     "com.typesafe.akka"   %%  "akka-actor"    % akkaV,
     "com.typesafe.akka"   %%  "akka-testkit"  % akkaV   % "test",
