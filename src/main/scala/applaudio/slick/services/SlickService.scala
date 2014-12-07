@@ -7,7 +7,7 @@ import scala.slick.jdbc.JdbcBackend._
 
 class SlickService {
 
-  private[this] val DatabaseConfigKey = "db"
+  private[this] val DatabaseConfigKey = "database"
 
   val driver = ConfigFactory.load().getString(s"$DatabaseConfigKey.driver") match {
     case "com.mysql.jdbc.Driver" => MySQLDriver
