@@ -1,9 +1,9 @@
 package applaudio.slick.tables
 
 import applaudio.models.Track
-import scala.slick.driver.JdbcDriver
+import applaudio.slick.services.DatabaseDriver
 
-class SlickTrackTable(val driver: JdbcDriver) {
+trait SlickTrackTable { this: DatabaseDriver =>
 
   import driver.simple._
 

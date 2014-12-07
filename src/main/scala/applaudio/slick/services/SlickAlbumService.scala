@@ -4,14 +4,12 @@ import applaudio.models.Album
 import applaudio.services.AlbumService
 import applaudio.slick.tables.SlickTrackTable
 
-class SlickAlbumService extends SlickService with AlbumService {
+class SlickAlbumService extends SlickService with AlbumService with SlickTrackTable {
 
   import driver.simple._
 
-  val trackTable = new SlickTrackTable(driver)
-
   override def byArtist(artist: String): List[Album] = withSession { implicit session: Session =>
-    trackTable.Tracks.byArtist(artist).map(_.album).filter(_.isDefined).list.distinct.map {
+    Tracks.byArtist(artist).map(_.album).filter(_.isDefined).list.distinct.map {
       album => Album(album.get)
     }
   }
