@@ -2,8 +2,8 @@ package applaudio.routing
 
 import akka.actor.Actor
 import applaudio.fakeservices.FakeArtistsService
-import applaudio.services.{TrackService, ArtistService}
-import applaudio.slick.services.{SlickTrackService, SlickArtistService}
+import applaudio.services.{AlbumService, TrackService, ArtistService}
+import applaudio.slick.services.{SlickAlbumService, SlickTrackService, SlickArtistService}
 import spray.httpx.encoding.Gzip
 import spray.routing._
 import spray.http.MediaTypes._
@@ -20,6 +20,7 @@ class Router extends Actor with ApplaudioRouting {
 trait ApplaudioRouting extends HttpService {
 
   val artistService: ArtistService = new SlickArtistService
+  val albumService: AlbumService = new SlickAlbumService
   val trackService: TrackService = new SlickTrackService
 
   val routes: Route = encodeResponse(Gzip) {
@@ -29,6 +30,13 @@ trait ApplaudioRouting extends HttpService {
           get {
             complete {
               artistService.all
+            }
+          }
+        } ~
+        path("albums" / Segment) { artist =>
+          get {
+            complete {
+              albumService.byArtist(artist)
             }
           }
         } ~
