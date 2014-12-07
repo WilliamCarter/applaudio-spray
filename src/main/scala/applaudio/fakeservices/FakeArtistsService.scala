@@ -1,9 +1,9 @@
 package applaudio.fakeservices
 
 import applaudio.models.Artist
-import applaudio.services.ArtistsService
+import applaudio.services.ArtistService
 
-class FakeArtistsService extends ArtistsService {
+class FakeArtistsService extends ArtistService {
 
   def all = List(Artist("Bob Dylan"), Artist("The Black Keys"))
 

@@ -2,15 +2,14 @@ package applaudio.routing
 
 import akka.actor.Actor
 import applaudio.fakeservices.FakeArtistsService
-import applaudio.services.ArtistsService
-import applaudio.slick.SlickArtistsService
+import applaudio.services.{TrackService, ArtistService}
+import applaudio.slick.services.{SlickTrackService, SlickArtistService}
 import spray.httpx.encoding.Gzip
 import spray.routing._
 import spray.http.MediaTypes._
 import spray.httpx.SprayJsonSupport._
 import spray.httpx.unmarshalling._
 import spray.httpx.marshalling._
-
 
 
 class Router extends Actor with ApplaudioRouting {
@@ -20,15 +19,23 @@ class Router extends Actor with ApplaudioRouting {
 
 trait ApplaudioRouting extends HttpService {
 
-  val artistsService: ArtistsService = new SlickArtistsService
+  val artistService: ArtistService = new SlickArtistService
+  val trackService: TrackService = new SlickTrackService
 
   val routes: Route = encodeResponse(Gzip) {
     pathPrefix("api") {
-      path("artists") {
-        get {
-          respondWithMediaType(`application/json`) {
+      respondWithMediaType(`application/json`) {
+        path("artists") {
+          get {
             complete {
-              artistsService.all
+              artistService.all
+            }
+          }
+        } ~
+        path("tracks" / Segment) { artist =>
+          get {
+            complete {
+              trackService.byArtist(artist)
             }
           }
         }

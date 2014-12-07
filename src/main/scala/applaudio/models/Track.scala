@@ -5,11 +5,11 @@ import spray.json.DefaultJsonProtocol
 case class Track (
   id: Option[Long],
   title: String,
-  artist: String,
-  album: String,
-  albumTrack: Int,
-  length: Int,
-  year: Int,
+  artist: Option[String],
+  album: Option[String],
+  albumTrack: Option[Int],
+  length: Option[Int],
+  year: Option[Int],
   encoding: String
 )
 

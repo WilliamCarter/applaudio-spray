@@ -2,7 +2,7 @@ package applaudio.services
 
 import applaudio.models.Artist
 
-trait ArtistsService {
+trait ArtistService {
 
   def all: List[Artist]
 

@@ -1,12 +1,12 @@
-package applaudio.slick
+package applaudio.slick.services
 
 import applaudio.models.Artist
-import applaudio.services.ArtistsService
+import applaudio.services.ArtistService
 import applaudio.slick.tables.TrackTable
 
 import scala.slick.driver.MySQLDriver.simple._
 
-class SlickArtistsService extends ArtistsService {
+class SlickArtistService extends ArtistService {
 
   val tracks = TableQuery[TrackTable]
 
