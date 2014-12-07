@@ -3,18 +3,16 @@ package applaudio.models
 import spray.json.DefaultJsonProtocol
 
 case class Track (
+  id: Option[Long],
   title: String,
   artist: String,
   album: String,
+  albumTrack: Int,
   length: Int,
   year: Int,
-  trackIndex: Int,
-  `type`: String,
-  quality: String,
-  size: Int,
-  filename: String
+  encoding: String
 )
 
 object Track extends DefaultJsonProtocol {
-  implicit val trackFormat = jsonFormat10(Track.apply)
+  implicit val trackFormat = jsonFormat8(Track.apply)
 }

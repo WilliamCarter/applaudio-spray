@@ -3,6 +3,7 @@ package applaudio.routing
 import akka.actor.Actor
 import applaudio.fakeservices.FakeArtistsService
 import applaudio.services.ArtistsService
+import applaudio.slick.SlickArtistsService
 import spray.httpx.encoding.Gzip
 import spray.routing._
 import spray.http.MediaTypes._
@@ -19,7 +20,7 @@ class Router extends Actor with ApplaudioRouting {
 
 trait ApplaudioRouting extends HttpService {
 
-  val artistsService: ArtistsService = new FakeArtistsService
+  val artistsService: ArtistsService = new SlickArtistsService
 
   val routes: Route = encodeResponse(Gzip) {
     pathPrefix("api") {
