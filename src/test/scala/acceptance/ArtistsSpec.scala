@@ -27,6 +27,12 @@ class ArtistsSpec extends Specification with Specs2RouteTest with ApplaudioRouti
       }
     }
 
+    "return all artists in the database" in {
+      Get("/api/artists") ~> routes ~> check {
+        println(Gzip.decode(response).entity.asString)
+        status === OK
+      }
+    }
   }
 
 }
