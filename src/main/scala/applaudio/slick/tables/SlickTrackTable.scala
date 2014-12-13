@@ -33,7 +33,7 @@ trait SlickTrackTable { this: DatabaseDriver =>
 
     def byArtist(artist: String) = filter(_.artist === artist)
 
-    def byAlbum(album: String) = filter(_.album === album)
+    def byAlbum(artist: String, album: String) = byArtist(artist).filter(_.album === album)
 
     def fromRow(row: (Long, String, Option[String], Option[String], Option[Int], Option[Int], Option[Int], String)): Track = {
       Track(Option(row._1), row._2, row._3, row._4, row._5, row._6, row._7, row._8)

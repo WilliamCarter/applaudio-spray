@@ -15,9 +15,9 @@ class SlickTrackService extends SlickService with TrackService with SlickTrackTa
     }
   }
 
-  override def byAlbum(album: String)(implicit ec: ExecutionContext) = withSession { implicit session: Session =>
+  override def byAlbum(artist: String, album: String)(implicit ec: ExecutionContext) = withSession { implicit session: Session =>
     Future{
-      Tracks.byAlbum(album).list.map(Tracks.fromRow(_))
+      Tracks.byAlbum(artist, album).list.map(Tracks.fromRow(_))
     }
   }
 

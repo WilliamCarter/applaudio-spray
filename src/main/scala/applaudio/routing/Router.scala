@@ -85,6 +85,13 @@ trait TracksApi extends HttpService {
           trackService.byArtist(artist)
         }
       }
+    } ~
+    path("tracks" / Segment / Segment) { (artist, album) =>
+      get {
+        complete {
+          trackService.byAlbum(artist, album)
+        }
+      }
     }
   }
 
