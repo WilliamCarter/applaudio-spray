@@ -1,13 +1,9 @@
 package applaudio.routing
 
 import akka.actor.Actor
-import applaudio.services.{AlbumService, TrackService, ArtistService}
-import applaudio.slick.services.{SlickAlbumService, SlickTrackService, SlickArtistService}
+import spray.http.MediaTypes._
 import spray.httpx.encoding.Gzip
 import spray.routing._
-import spray.http.MediaTypes._
-import spray.httpx.SprayJsonSupport._
-import scala.concurrent.ExecutionContext.Implicits.global
 
 
 class Router extends Actor with ApplaudioRouting {
@@ -35,61 +31,6 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
               </body>
             </html>
           }
-        }
-      }
-    }
-  }
-
-}
-
-trait ArtistsApi extends HttpService {
-
-  val artistService: ArtistService = new SlickArtistService
-
-  val artistRoutes: Route = {
-    path("artists") {
-      get {
-        complete {
-          artistService.all
-        }
-      }
-    }
-  }
-
-}
-
-trait AlbumsApi extends HttpService {
-
-  val albumService: AlbumService = new SlickAlbumService
-
-  val albumRoutes: Route = {
-    path("albums" / Segment) { artist =>
-      get {
-        complete {
-          albumService.byArtist(artist)
-        }
-      }
-    }
-  }
-
-}
-
-trait TracksApi extends HttpService {
-
-  val trackService: TrackService = new SlickTrackService
-
-  val trackRoutes: Route = {
-    path("tracks" / Segment) { artist =>
-      get {
-        complete {
-          trackService.byArtist(artist)
-        }
-      }
-    } ~
-    path("tracks" / Segment / Segment) { (artist, album) =>
-      get {
-        complete {
-          trackService.byAlbum(artist, album)
         }
       }
     }
