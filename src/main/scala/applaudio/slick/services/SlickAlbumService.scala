@@ -10,11 +10,9 @@ class SlickAlbumService extends SlickService with AlbumService with SlickTrackTa
 
   import driver.simple._
 
-  override def byArtist(artist: String)(implicit ec: ExecutionContext) = withSession { implicit session: Session =>
-    Future {
-      Tracks.byArtist(artist).map(_.album).filter(_.isDefined).list.distinct.map {
-        album => Album(album.get)
-      }
+  override def byArtist(artist: String) = withSession { implicit session: Session =>
+    Tracks.byArtist(artist).map(_.album).filter(_.isDefined).list.distinct.map {
+      album => Album(album.get)
     }
   }
 

@@ -6,6 +6,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait ArtistService {
 
-  def all(implicit ec: ExecutionContext): Future[List[Artist]]
+  def all: Future[List[Artist]]
 
 }

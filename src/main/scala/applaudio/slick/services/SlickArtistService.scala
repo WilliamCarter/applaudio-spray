@@ -10,11 +10,9 @@ class SlickArtistService extends SlickService with ArtistService with SlickTrack
 
   import driver.simple._
 
-  override def all(implicit ec: ExecutionContext): Future[List[Artist]] = withSession { implicit session: Session =>
-    Future {
-      Tracks.map(_.artist).filter(_.isDefined).list.distinct.map {
-        track => Artist(track.get)
-      }
+  override def all: Future[List[Artist]] = withSession { implicit session: Session =>
+    Tracks.map(_.artist).filter(_.isDefined).list.distinct.map {
+      track => Artist(track.get)
     }
   }
 

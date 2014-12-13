@@ -2,13 +2,16 @@ package applaudio.slick.services
 
 import com.typesafe.config.ConfigFactory
 
+import scala.concurrent.Future
 import scala.slick.driver._
 import scala.slick.jdbc.JdbcBackend._
+import scala.concurrent.ExecutionContext.Implicits.global
+
 
 class SlickService extends DatabaseDriver {
 
   def withSession[T](f: Session => T) = Database.forConfig(DatabaseConfigKey) withSession { implicit session: Session =>
-    f(session)
+    Future { f(session) }
   }
 
 }

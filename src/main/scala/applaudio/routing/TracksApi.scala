@@ -2,6 +2,7 @@ package applaudio.routing
 
 import applaudio.services.TrackService
 import applaudio.slick.services.SlickTrackService
+import spray.http.MultipartFormData
 import spray.routing._
 import spray.httpx.SprayJsonSupport._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -28,7 +29,11 @@ trait TracksApi extends HttpService {
       } ~
       path("upload") {
         post {
-          complete("hmm")
+
+          entity(as[MultipartFormData]) { data =>
+            println(data)
+            complete("OK")
+          }
         }
       }
     }
