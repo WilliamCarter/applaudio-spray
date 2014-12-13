@@ -1,10 +1,9 @@
 package applaudio.slick.services
 
-import applaudio.models.Track
 import applaudio.services.TrackService
 import applaudio.slick.tables.SlickTrackTable
 
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
 class SlickTrackService extends SlickService with TrackService with SlickTrackTable {
 

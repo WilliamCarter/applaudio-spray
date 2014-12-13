@@ -15,36 +15,14 @@ class Router extends Actor with ApplaudioRouting {
   override def receive: Receive = runRoute(routes)
 }
 
-trait ApplaudioRouting extends HttpService {
-
-  val artistService: ArtistService = new SlickArtistService
-  val albumService: AlbumService = new SlickAlbumService
-  val trackService: TrackService = new SlickTrackService
+trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with TracksApi {
 
   val routes: Route = encodeResponse(Gzip) {
     pathPrefix("api") {
       respondWithMediaType(`application/json`) {
-        path("artists") {
-          get {
-            complete {
-              artistService.all
-            }
-          }
-        } ~
-        path("albums" / Segment) { artist =>
-          get {
-            complete {
-              albumService.byArtist(artist)
-            }
-          }
-        } ~
-        path("tracks" / Segment) { artist =>
-          get {
-            complete {
-              trackService.byArtist(artist)
-            }
-          }
-        }
+        artistRoutes ~
+        albumRoutes ~
+        trackRoutes
       }
     } ~
     path("") {
@@ -57,6 +35,54 @@ trait ApplaudioRouting extends HttpService {
               </body>
             </html>
           }
+        }
+      }
+    }
+  }
+
+}
+
+trait ArtistsApi extends HttpService {
+
+  val artistService: ArtistService = new SlickArtistService
+
+  val artistRoutes: Route = {
+    path("artists") {
+      get {
+        complete {
+          artistService.all
+        }
+      }
+    }
+  }
+
+}
+
+trait AlbumsApi extends HttpService {
+
+  val albumService: AlbumService = new SlickAlbumService
+
+  val albumRoutes: Route = {
+    path("albums" / Segment) { artist =>
+      get {
+        complete {
+          albumService.byArtist(artist)
+        }
+      }
+    }
+  }
+
+}
+
+trait TracksApi extends HttpService {
+
+  val trackService: TrackService = new SlickTrackService
+
+  val trackRoutes: Route = {
+    path("tracks" / Segment) { artist =>
+      get {
+        complete {
+          trackService.byArtist(artist)
         }
       }
     }
