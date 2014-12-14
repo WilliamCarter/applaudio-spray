@@ -1,8 +1,8 @@
-package applaudio.slick.services
+package applaudio.persistence.services
 
 import applaudio.models.Artist
 import applaudio.services.ArtistService
-import applaudio.slick.tables.SlickTrackTable
+import applaudio.persistence.tables.SlickTrackTable
 
 import scala.concurrent.{ExecutionContext, Future}
 

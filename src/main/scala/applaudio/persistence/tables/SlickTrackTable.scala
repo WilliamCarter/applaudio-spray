@@ -1,7 +1,7 @@
-package applaudio.slick.tables
+package applaudio.persistence.tables
 
 import applaudio.models.Track
-import applaudio.slick.services.DatabaseDriver
+import applaudio.persistence.services.DatabaseDriver
 
 trait SlickTrackTable { this: DatabaseDriver =>
 

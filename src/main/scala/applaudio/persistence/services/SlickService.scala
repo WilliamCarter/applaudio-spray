@@ -1,4 +1,4 @@
-package applaudio.slick.services
+package applaudio.persistence.services
 
 import com.typesafe.config.ConfigFactory
 

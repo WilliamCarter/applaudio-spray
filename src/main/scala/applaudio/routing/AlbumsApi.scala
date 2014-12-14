@@ -1,7 +1,7 @@
 package applaudio.routing
 
 import applaudio.services.AlbumService
-import applaudio.slick.services.SlickAlbumService
+import applaudio.persistence.services.SlickAlbumService
 import spray.routing.{Route, HttpService}
 import spray.httpx.SprayJsonSupport._
 import scala.concurrent.ExecutionContext.Implicits.global
