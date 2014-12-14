@@ -12,6 +12,8 @@ import spray.httpx.SprayJsonSupport._
 import scala.concurrent.ExecutionContext.Implicits.global
 import spray.http.MediaTypes._
 
+import scalaz.{\/, \/-, -\/}
+
 
 trait TracksApi extends HttpService {
 
@@ -48,31 +50,18 @@ trait TracksApi extends HttpService {
 
             val track = Track(title, artist, album, albumTrack, length, year, encoding)
 
-            libraryService.add(track, fileData)
-            complete("OK")
+            complete{
+              libraryService.add(track, fileData).map { disjunction =>
+                disjunction.toEither match {
+                  case Left(left) => left
+                  case Right(unit) => "OK"
+                }
+              }
+            }
           }
-//          entity(as[MultipartFormData]) { data =>
-//
-////            println(data.get("artist"))
-////            println(data.get("file"))
-//
-//            complete("hmm")
-//          }
         }
       }
     }
   }
 
 }
-
-//case class TrackUpload(track: Track, fileData: Array[Byte])
-//object TrackUpload {
-//  implicit def unmarshaller = Unmarshaller[TrackUpload](`application/x-www-form-urlencoded`) {
-//    case HttpEntity.NonEmpty(contentType, data) =>
-//      val formData = data.as[MultipartFormData]
-//      TrackUpload(
-//        Track(),
-//        data.get("file").get
-//      )
-//  }
-//}

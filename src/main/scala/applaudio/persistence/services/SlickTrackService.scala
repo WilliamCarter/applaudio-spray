@@ -19,7 +19,9 @@ class SlickTrackService extends SlickService with TrackService with SlickTrackTa
   }
 
   override def add(track: Track): Future[String \/ Long] = withSession { implicit session: Session =>
-    val id = (Tracks returning Tracks.map(_.id)) += Track.unapply(track).get
-    \/-(id)
+    \/- {
+      (Tracks returning Tracks.map(_.id)) += Track.unapply(track).get
+    }
   }
+  
 }
