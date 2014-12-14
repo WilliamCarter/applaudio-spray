@@ -9,7 +9,7 @@ trait SlickTrackTable { this: DatabaseDriver =>
 
   class TrackTable(tag: Tag) extends Table[(Option[Long], String, Option[String], Option[String], Option[Int], Option[Int], Option[Int], String)](tag, "Track") {
 
-    def id: Column[Option[Long]] = column[Long]("Id", O.PrimaryKey)
+    def id: Column[Long] = column[Long]("Id", O.PrimaryKey, O.AutoInc)
 
     def title: Column[String] = column[String]("Title", O.NotNull)
 
@@ -25,7 +25,7 @@ trait SlickTrackTable { this: DatabaseDriver =>
 
     def encoding: Column[String] = column[String]("Encoding")
 
-    def * = (id, title, artist, album, albumTrack, length, year, encoding)
+    def * = (id.?, title, artist, album, albumTrack, length, year, encoding)
   }
 
 
