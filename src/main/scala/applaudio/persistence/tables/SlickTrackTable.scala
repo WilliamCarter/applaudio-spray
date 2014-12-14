@@ -7,9 +7,9 @@ trait SlickTrackTable { this: DatabaseDriver =>
 
   import driver.simple._
 
-  class TrackTable(tag: Tag) extends Table[(Long, String, Option[String], Option[String], Option[Int], Option[Int], Option[Int], String)](tag, "Track") {
+  class TrackTable(tag: Tag) extends Table[(Option[Long], String, Option[String], Option[String], Option[Int], Option[Int], Option[Int], String)](tag, "Track") {
 
-    def id: Column[Long] = column[Long]("Id", O.PrimaryKey, O.AutoInc)
+    def id: Column[Option[Long]] = column[Long]("Id", O.PrimaryKey)
 
     def title: Column[String] = column[String]("Title", O.NotNull)
 
@@ -37,8 +37,8 @@ trait SlickTrackTable { this: DatabaseDriver =>
 
   }
 
-  implicit def fromRow(row: (Long, String, Option[String], Option[String], Option[Int], Option[Int], Option[Int], String)): Track = {
-    Track(Option(row._1), row._2, row._3, row._4, row._5, row._6, row._7, row._8)
+  implicit def fromRow(row: (Option[Long], String, Option[String], Option[String], Option[Int], Option[Int], Option[Int], String)): Track = {
+    Track(row._1, row._2, row._3, row._4, row._5, row._6, row._7, row._8)
   }
 
 

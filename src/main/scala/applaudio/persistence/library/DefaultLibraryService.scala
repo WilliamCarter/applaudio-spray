@@ -15,7 +15,7 @@ class DefaultLibraryService extends LibraryService {
 
   val trackService: TrackService = new SlickTrackService
 
-  override def add(track: Track, fileData: Array[Byte]): Future[\/[String, Unit]] = {
+  override def add(track: Track, fileData: Array[Byte]): Future[String \/ Unit] = {
     println("DefaultLibraryService.add")
     println(track)
 
@@ -26,7 +26,7 @@ class DefaultLibraryService extends LibraryService {
 
   }
 
-  private def saveInLibrary(maybeId: \/[String, Long], byteArray: Array[Byte]): Future[\/[String, Unit]] = {
+  private def saveInLibrary(maybeId: String \/ Long, byteArray: Array[Byte]): Future[String \/ Unit] = {
     Future {
       maybeId.map { id =>
 

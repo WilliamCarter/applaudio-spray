@@ -4,7 +4,7 @@ import applaudio.models.Track
 import applaudio.services.TrackService
 import applaudio.persistence.tables.SlickTrackTable
 import scala.concurrent.Future
-import scalaz.{-\/, \/}
+import scalaz.{\/-, -\/, \/}
 
 class SlickTrackService extends SlickService with TrackService with SlickTrackTable {
 
@@ -18,8 +18,10 @@ class SlickTrackService extends SlickService with TrackService with SlickTrackTa
     Tracks.byAlbum(artist, album).list.map(fromRow _)
   }
 
-  override def add(track: Track): Future[\/[String, Long]] = withSession { implicit session: Session =>
-    //Tracks += track
-    -\/("Failure for now...")
+  override def add(track: Track): Future[String \/ Long] = withSession { implicit session: Session =>
+    (Tracks returning Tracks.map(_.id)) += Track.unapply(track).get match {
+      case Some(id) => \/-(id)
+      case None => -\/("Inserted track not given an ID. What!?")
+    }
   }
 }
