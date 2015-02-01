@@ -1,12 +1,12 @@
 package applaudio.services
 
-import applaudio.models.Track
+import applaudio.error.ApplaudioError
 
 import scala.concurrent.Future
 import scalaz.\/
 
 trait LibraryService {
 
-  def add(track: Track, byteArray: Array[Byte]): Future[\/[String, Unit]]
+  def save(id: Long, byteArray: Array[Byte]): Future[ApplaudioError\/Long]
 
 }

@@ -1,9 +1,12 @@
 package applaudio.routing
 
 import akka.actor.Actor
+import applaudio.error.LibraryError
 import spray.http.MediaTypes._
+import spray.http.StatusCodes._
 import spray.httpx.encoding.Gzip
 import spray.routing._
+import spray.util.LoggingContext
 
 
 class Router extends Actor with ApplaudioRouting {
@@ -15,15 +18,17 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
 
   val routes: Route = encodeResponse(Gzip) {
     pathPrefix("api") {
-      respondWithMediaType(`application/json`) {
-        artistRoutes ~
-        albumRoutes ~
-        trackRoutes
+      handleExceptions(apiErrorHandler) {
+        respondWithMediaType(`application/json`) {
+          artistRoutes ~
+          albumRoutes ~
+          trackRoutes
+        }
       }
     } ~
     path("") {
       get {
-        respondWithMediaType(`text/html`) { // XML is marshalled to `text/xml` by default, so we simply override here
+        respondWithMediaType(`text/html`) {
           complete {
             <html>
               <body>
@@ -34,6 +39,20 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
         }
       }
     }
+  }
+
+  def apiErrorHandler(implicit log: LoggingContext) = ExceptionHandler {
+    case e: LibraryError =>
+      requestUri { uri =>
+        log.warning(s"Request to $uri threw a Library Error: ${e.message}")
+        complete(InternalServerError, e.message)
+      }
+    case e: Throwable =>
+      requestUri { uri =>
+        log.warning(s"Request to $uri threw a an unknown error: ${e.getMessage}")
+        log.warning(e.getStackTrace.toString)
+        complete(InternalServerError)
+      }
   }
 
 }

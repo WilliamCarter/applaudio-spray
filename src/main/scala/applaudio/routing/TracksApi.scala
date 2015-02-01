@@ -1,21 +1,19 @@
 package applaudio.routing
 
+import applaudio.error.ApplaudioError
 import applaudio.models.Track
 import applaudio.persistence.library.DefaultLibraryService
-import applaudio.services.{LibraryService, TrackService}
 import applaudio.persistence.services.SlickTrackService
-import spray.http.HttpEntity.NonEmpty
-import spray.http._
-import spray.httpx.unmarshalling.Unmarshaller
-import spray.routing._
+import applaudio.services.{LibraryService, TrackService}
 import spray.httpx.SprayJsonSupport._
+import spray.routing._
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import spray.http.MediaTypes._
+import scala.concurrent.Future
+import scalaz.\/
 
-import scalaz.{\/, \/-, -\/}
 
-
-trait TracksApi extends HttpService {
+trait TracksApi extends HttpService with Marshallers {
 
   val trackService: TrackService = new SlickTrackService
   val libraryService: LibraryService = new DefaultLibraryService
@@ -50,18 +48,20 @@ trait TracksApi extends HttpService {
 
             val track = Track(title, artist, album, albumTrack, length, year, encoding)
 
-            complete{
-              libraryService.add(track, fileData).map { disjunction =>
-                disjunction.toEither match {
-                  case Left(left) => left
-                  case Right(unit) => "OK"
-                }
-              }
+            complete {
+              upload(track, fileData)
             }
           }
         }
       }
     }
+  }
+
+  def upload(track: Track, data: Array[Byte]): Future[ApplaudioError\/Track] = for {
+    id <- trackService.add(track)
+    saved <- libraryService.save(id, data)
+  } yield {
+    saved.map{ id => track.copy(id = Some(id)) }
   }
 
 }
