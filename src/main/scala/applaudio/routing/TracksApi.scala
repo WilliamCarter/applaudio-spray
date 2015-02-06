@@ -1,6 +1,5 @@
 package applaudio.routing
 
-import applaudio.error.ApplaudioError
 import applaudio.models.Track
 import applaudio.persistence.library.DefaultLibraryService
 import applaudio.persistence.services.SlickTrackService
@@ -10,7 +9,6 @@ import spray.routing._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scalaz.\/
 
 
 trait TracksApi extends HttpService with Marshallers {
@@ -57,11 +55,11 @@ trait TracksApi extends HttpService with Marshallers {
     }
   }
 
-  def upload(track: Track, data: Array[Byte]): Future[ApplaudioError\/Track] = for {
+  def upload(track: Track, data: Array[Byte]): Future[Track] = for {
     id <- trackService.add(track)
     saved <- libraryService.save(id, data)
   } yield {
-    saved.map{ id => track.copy(id = Some(id)) }
+    track.copy(id = Some(id))
   }
 
 }

@@ -1,7 +1,7 @@
 package applaudio.routing
 
 import akka.actor.Actor
-import applaudio.error.LibraryError
+import applaudio.error.{DatabaseError, LibraryError}
 import spray.http.MediaTypes._
 import spray.http.StatusCodes._
 import spray.httpx.encoding.Gzip
@@ -42,15 +42,20 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
   }
 
   def apiErrorHandler(implicit log: LoggingContext) = ExceptionHandler {
+    case e: DatabaseError =>
+      requestUri { uri =>
+        log.warning(s"Request to $uri threw a Database Error: ${e.message}")
+        complete(ServiceUnavailable, "Database Error")
+      }
     case e: LibraryError =>
       requestUri { uri =>
         log.warning(s"Request to $uri threw a Library Error: ${e.message}")
-        complete(InternalServerError, e.message)
+        complete(InternalServerError, "Library Error")
       }
     case e: Throwable =>
       requestUri { uri =>
         log.warning(s"Request to $uri threw a an unknown error: ${e.getMessage}")
-        log.warning(e.getStackTrace.toString)
+        log.warning(e.toString)
         complete(InternalServerError)
       }
   }

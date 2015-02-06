@@ -1,17 +1,19 @@
 package applaudio.persistence.services
 
+import applaudio.error.DatabaseError
 import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.Future
 import scala.slick.driver._
 import scala.slick.jdbc.JdbcBackend._
-import scala.concurrent.ExecutionContext.Implicits.global
 
 
 class SlickService extends DatabaseDriver {
 
-  def withSession[T](f: Session => T) = Database.forConfig(DatabaseConfigKey) withSession { implicit session: Session =>
-    Future { f(session) }
+  def withSession[T](f: Session => T) = try {
+    Database.forConfig(DatabaseConfigKey) withSession { implicit session: Session => Future.successful { f(session) } }
+  } catch {
+    case e: Throwable => Future.failed { DatabaseError(e.getMessage) }
   }
 
 }
