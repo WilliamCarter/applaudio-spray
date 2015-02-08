@@ -1,0 +1,24 @@
+<div id="upload-modal">
+
+    <h1>Upload Music</h1>
+
+    <div id="file-upload">
+        <input id="modal-file-input" type="file" multiple onchange="angular.element(document.getElementById('file-upload')).scope().readUploadFiles()" hidden>
+        <!-- No support in Angular for file inputs so readUploadFiles must be called from the modal scope explicitly. -->
+        <div id="upload-list" applaudio-scrollable ng-if="files.length > 0">
+            <table>
+                <tr><th>Track Name</th><th class="mime-type">Type</th></tr>
+                <tr ng-repeat="uploadFile in files">
+                    <td>{{ uploadFile.name }}</td>
+                    <td>{{ uploadFile.type }}</td>
+                </tr>
+            </table>
+        </div>
+        <button ng-click="clickFileInput()">Choose Files</button>
+        <applaudio-progress-bar progress="uploadProgress" ng-if="uploadInProgress"></applaudio-progress-bar>
+    </div>
+
+    <button class="dismissive" ng-click="hide()">Cancel</button>
+    <button class="dismissive" ng-click="confirm()" ng-class="{disabled: !files.length}">Add</button>
+
+</div>

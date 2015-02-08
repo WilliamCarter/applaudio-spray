@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "1.2.16",
+    "angular-animate": "1.2.16",
+    "angular-route": "1.2.16",
+    "requirejs": "~2.1.14",
+    "howler": "~1.1.25",
+    "angular-ui-tree": "2.1.4",
+    "catext": "https://github.com/WilliamCarter/catext.git#master"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.16"
+  },
+  "resolutions": {
+    "es5-shim": "2.3.0"
+  }
+}

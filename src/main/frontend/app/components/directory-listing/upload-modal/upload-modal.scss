@@ -1,0 +1,27 @@
+#modal-container {
+
+    #file-upload {
+
+        width: 800px;
+
+        #upload-list {
+            height: 200px;
+            padding-top: $pad;
+            overflow : auto;
+
+            table {
+                th {
+                    text-align: left;
+                }
+                th.mime-type {
+                    width: 20%;
+                }
+            }
+        }
+
+        button {
+            margin-bottom: -$pad;
+        }
+    }
+
+}

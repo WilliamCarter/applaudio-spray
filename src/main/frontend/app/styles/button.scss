@@ -1,0 +1,48 @@
+$buttonIconSize : 36px;
+
+button, .button {
+    position : relative;
+    width: 100%; // fill button container
+    margin-top: 10px;
+    padding: $pad;
+    font: $verdana;
+    color: $foreground;
+    background: $background;
+    border: $borderSize solid;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 200ms linear;
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0ms linear; // no transition on mouse enter.
+        background-color: #333333;
+    }
+
+    &:active {
+        // 200ms transition on mouse exit.
+        background-color: #999999;
+    }
+
+    &.disabled, &:disabled {
+        cursor: default;
+        color: #AAAAAA;
+        background-color: #000000;
+    }
+
+    img {
+        position : absolute;
+        width: $buttonIconSize;
+        margin-top: -($buttonIconSize / 2);
+        top: 50%;
+        left: $pad;
+    }
+}
+
+button.with-icon {
+    padding-left: $pad*2+$buttonIconSize;
+    text-align: left;
+}

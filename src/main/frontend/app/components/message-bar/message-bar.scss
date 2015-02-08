@@ -1,0 +1,39 @@
+$message-bar-width: 400px;
+
+#message-bar-holder {
+  display: inline-block;
+  position: absolute;
+  margin: 0 auto;
+  max-width: 1000px;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 11;
+
+  #message-bar {
+    color: #fff;
+    border: 1px solid;
+    font-size: 14px;
+    display: inline-block;
+    min-width: $message-bar-width;
+    background-color: #000000;
+
+    p {
+      text-align: center;
+      vertical-align: middle;
+      padding: 8px;
+      margin: 0;
+    }
+
+  }
+
+  .fade.ng-leave {
+    animation: cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s fadeOut;
+  }
+  .fade.ng-enter {
+    animation: cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s fadeIn;
+  }
+
+
+}

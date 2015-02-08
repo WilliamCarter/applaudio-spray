@@ -1,0 +1,9 @@
+<div class="modal">
+    <div ng-if="active">
+        <div class="modal-background" ng-click="hide()"></div>
+        <div id="modal-container">
+            <div ng-transclude></div>
+        </div>
+    </div>
+    <button class="show-modal" ng-click="show()">{{buttonText}}</button>
+</div>

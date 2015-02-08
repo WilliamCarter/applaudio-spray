@@ -1,0 +1,5 @@
+<div class="listing-item" ng-class="item.type" id="{{itemId}}" ng-click="navigate()">
+    <img ng-src="{{iconSrc}}" ng-click="queueTrack()" applaudio-draggable drag-condition="isTrack" drag-data="item">
+    <span class="label">{{item.label}}</span>
+    <a class="download-button" ng-if="showDownloadLink" href="{{item.download}}">DOWNLOAD</a>
+</div>

@@ -1,0 +1,85 @@
+$verdana: 28px Verdana;
+$borderSize: 2px;
+$background: #000000;
+$foreground: #FFFFFF;
+$pad: 10px;
+
+@keyframes fadeIn {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1 }
+  100% { opacity: 0 }
+}
+
+
+@keyframes addToList {
+    0% {
+        height: 0px;
+        opacity: 0;
+    }
+    100%{
+        height: $listItemHeight - $borderSize;
+        opacity: 1;
+    }
+}
+
+@keyframes removeFromList {
+    0% {
+        height: $listItemHeight - $borderSize;
+        opacity: 1;
+    }
+    100%{
+        height: 0px;
+        opacity: 0;
+    }
+}
+
+@keyframes delayVisibility {
+    0% {
+        height: 0px;
+        opacity: 0;
+    }
+    50% {
+        height: 0px;
+        opacity: 0;
+    }
+    100%{
+        height: $listItemHeight;
+        opacity: 1;
+    }
+}
+
+.drop-imminent {
+  background-color: #222222;
+}
+
+
+html, body, div#container , div#base{
+    width: 100%;
+    height: 100%;
+}
+
+html, body, div {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.inline {
+    display: inline;
+}
+
+a {
+    color: $foreground;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+    &:active {
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,10 @@
+<div id="add-directory-modal">
+
+    <h1>Add Directory</h1>
+
+    <div><span class="label">Directory name: </span><input type="text" ng-model="directoryName" placeholder="directory" on-enter="confirm(directoryName)"></div>
+
+    <button class="dismissive" ng-click="hide()">Cancel</button>
+    <button class="dismissive" ng-click="confirm(directoryName)" ng-class="{disabled: !directoryName}">Add</button>
+
+</div>

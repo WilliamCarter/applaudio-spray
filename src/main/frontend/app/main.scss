@@ -1,0 +1,140 @@
+$leftPanelWidth: 320px;
+$playerHeight: 140px;
+$listItemHeight: 60px;
+
+@import "styles/globals";
+
+@import "styles/button";
+@import "styles/text-input";
+
+@import "styles/404";
+
+@import "ui/infinite-label/infintite-label";
+@import "ui/scrollable/scrollable";
+@import "ui/progress-bar/progress-bar";
+@import "ui/modal/modal";
+
+@import "components/message-bar/message-bar";
+@import "components/directory-listing/upload-modal/upload-modal";
+@import "components/directory-listing/add-directory-modal/add-directory-modal";
+@import "components/player/player";
+
+
+body {
+
+    background-color: $background;
+    user-select: none;
+    cursor: default;
+    font: $verdana;
+    color: $foreground;
+    overflow: hidden;
+
+    header {
+        height: $playerHeight + 2*$pad;
+        margin: 0px;
+        padding: 0px;
+        position: relative;
+
+        div.player {
+            vertical-align: top;
+            width: $leftPanelWidth;
+            height: $playerHeight;
+            margin: $pad;
+            display: inline-block;
+
+            div.player {
+                vertical-align: top;
+                width: $leftPanelWidth;
+                height: $playerHeight;
+                position: relative;
+
+                table {
+                  position: absolute;
+                  table-layout: fixed;
+                  bottom: 0px;
+                }
+            }
+        }
+
+
+        div#current-directory {
+            padding: $pad;
+            display: inline-block;
+            transform: translate(0, -50%);
+            position: absolute;
+            top: 50%;
+            font-size: 60px;
+
+            a, span {
+                margin: 0;
+                padding: 0;
+            }
+        }
+    }
+
+    #lower-content {
+
+        padding: $pad;
+        padding-top: 0px;
+
+        #left-panel {
+            width: $leftPanelWidth;
+            height: 100%;
+            display: table-cell;
+            vertical-align: top;
+            font-size: 14px;
+
+            @import "components/track-queue/track-queue";
+        }
+
+        #listing-menu {
+            height: inherit;
+            display: table-cell;
+            padding-left: $pad;
+            padding-right: $pad;
+            position: relative;
+
+            .scrollable {
+                padding-bottom: $pad;
+
+                @import "components/directory-listing/listing-item/listing-item";
+
+                .animate-list-item.ng-enter {
+                    animation: 500ms addToList;
+                }
+
+                .animate-list-item.ng-leave {
+                    animation: 500ms removeFromList;
+                }
+
+                .empty-listing-placeholder {
+                    padding: $pad;
+                }
+                .empty-listing-placeholder.ng-enter {
+                    opacity:0;
+                    animation: 1000ms delayVisibility;
+                }
+                .empty-listing-placeholder.ng-enter-active {
+                    opacity:1;
+                }
+            }
+
+        }
+
+        #right-panel {
+            width: 20%;
+            height: inherit;
+            display: table-cell;
+            vertical-align: top;
+        }
+    }
+}
+
+.angular-ui-tree-drag {
+  position: absolute;
+  font-size: 14px;
+  z-index: 999;
+  opacity: .8;
+  list-style-type: none;
+  pointer-events: none;
+}

@@ -1,0 +1,21 @@
+.progress-bar {
+
+    width: 700px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #FFFFFF;
+    position: relative;
+
+    .progress-display {
+
+        transition:width 250ms;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: #FFFFFF;
+    }
+}

@@ -1,0 +1,37 @@
+#track-queue {
+  border: $borderSize solid;
+  width: $leftPanelWidth;
+  height: 100%;
+  min-height: 400px;
+
+  ol {
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+
+    li.angular-ui-tree-hidden {
+      // Unwanted placeholder that saves the drag from space
+      height: 0px;
+    }
+
+    li {
+
+      .queued-item {
+        margin: -1px 0px 0px 0px;
+        padding: 2px 0px 2px 6px;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+
+        &:hover {
+          cursor: move;
+        }
+      }
+
+    }
+
+  }
+
+  p {
+    margin: $pad;
+  }
+}

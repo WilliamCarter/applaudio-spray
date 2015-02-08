@@ -1,0 +1,13 @@
+.infinite-label_container {
+  width: 100%;
+  overflow-x: hidden;
+
+  .infinite-label_content {
+    display: inline;
+    white-space: nowrap;
+
+    &.scrolling {
+      cursor: ew-resize;
+    }
+  }
+}

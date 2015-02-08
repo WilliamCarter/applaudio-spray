@@ -16,6 +16,8 @@ class Router extends Actor with ApplaudioRouting {
 
 trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with TracksApi {
 
+
+
   val routes: Route = encodeResponse(Gzip) {
     pathPrefix("api") {
       handleExceptions(apiErrorHandler) {
@@ -26,17 +28,12 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
         }
       }
     } ~
-    path("") {
-      get {
-        respondWithMediaType(`text/html`) {
-          complete {
-            <html>
-              <body>
-                <h1>Applaudio Angular Application</h1>
-              </body>
-            </html>
-          }
-        }
+    get {
+      path("") {
+        getFromResource("app/index.html")
+      } ~
+      path(Rest) { staticResource =>
+        getFromResource(s"app/$staticResource")
       }
     }
   }

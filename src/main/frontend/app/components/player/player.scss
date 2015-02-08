@@ -1,0 +1,32 @@
+.player {
+
+  border: $borderSize solid;
+  padding: 10px;
+
+  infinite-label {
+    height: 40px;
+    margin-bottom: 10px;
+  }
+
+  table, th, tr, td {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+  table.buttons {
+
+    height: 30px;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: 4px;
+
+    button {
+      margin: 0px;
+      padding: 8px;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+
+  }
+}

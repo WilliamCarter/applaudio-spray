@@ -1,0 +1,55 @@
+.listing-item {
+    position: relative;
+    height: $listItemHeight; // declare height so it will match animation height.
+    margin-bottom: -$borderSize; // Allow borders above and below to overlap when this item is repeated.
+    padding: $pad;
+    border: $borderSize solid;
+    background-color: $background;
+
+    img {
+        width: $listItemHeight - 2*$pad;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+
+    .label {
+        position: absolute;
+        left: $listItemHeight;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+
+    .download-button {
+        position: absolute;
+        right: $pad;
+        top: 50%;
+        font-size: 14px;
+        transform: translate(0, -50%);
+        cursor: pointer;
+    }
+}
+
+.directory {
+
+    cursor: pointer;
+    transition: background-color 200ms linear;
+
+    &:hover {
+        transition: background-color 0ms linear;
+        background-color: #333333;
+    }
+
+    &:active {
+        background-color: #999999;
+    }
+
+    a {
+        color: #FFFFFF;
+    }
+
+}
+
+.file {
+
+}
