@@ -1,9 +1,12 @@
 package applaudio.routing
 
+import java.io.ByteArrayInputStream
+
 import applaudio.models.Track
 import applaudio.persistence.library.DefaultLibraryService
 import applaudio.persistence.services.SlickTrackService
 import applaudio.services.{LibraryService, TrackService}
+import spray.http.BodyPart
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
 
@@ -42,12 +45,12 @@ trait TracksApi extends HttpService with Marshallers {
               'length.as[Option[Int]],
               'year.as[Option[Int]],
               'encoding.as[String],
-              'file.as[Array[Byte]]) { (title, artist, album, albumTrack, length, year, encoding, fileData) =>
+              'file.as[BodyPart]) { (title, artist, album, albumTrack, length, year, encoding, file) =>
 
             val track = Track(title, artist, album, albumTrack, length, year, encoding)
 
             complete {
-              upload(track, fileData)
+              upload(track, new ByteArrayInputStream(file.entity.data.toByteArray))
             }
           }
         }
@@ -55,11 +58,9 @@ trait TracksApi extends HttpService with Marshallers {
     }
   }
 
-  def upload(track: Track, data: Array[Byte]): Future[Track] = for {
+  def upload(track: Track, data: ByteArrayInputStream): Future[Track] = for {
     id <- trackService.add(track)
     saved <- libraryService.save(id, data)
-  } yield {
-    track.copy(id = Some(id))
-  }
+  } yield track.copy(id = Some(id))
 
 }
