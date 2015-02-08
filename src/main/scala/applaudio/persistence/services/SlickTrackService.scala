@@ -22,4 +22,8 @@ class SlickTrackService extends SlickService with TrackService with SlickTrackTa
     (Tracks returning Tracks.map(_.id)) += Track.unapply(track).get
   }
 
+  override def delete(id: Long) = withSession { implicit session: Session =>
+    Tracks.filter(_.id === id).delete
+  }
+
 }

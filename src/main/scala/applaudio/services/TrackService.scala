@@ -11,5 +11,6 @@ trait TrackService {
   def byAlbum(artist: String, album: String): Future[List[Track]]
 
   def add(track: Track): Future[Long]
+  def delete(id: Long)
 
 }

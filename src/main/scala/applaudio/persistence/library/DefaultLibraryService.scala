@@ -17,4 +17,6 @@ class DefaultLibraryService extends LibraryService with ApplaudioConfiguration {
     case e: Throwable => Future.failed(LibraryError(e.getMessage))
   }
 
+  override def delete(filename: String) = Files.delete(Paths.get(s"$libraryRoot/$filename"))
+
 }
