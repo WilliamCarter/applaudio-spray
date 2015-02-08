@@ -33,6 +33,7 @@ define([
         DirectoryListingService.loadContent = function () {
             console.log("DirectoryListingService.loadContent()");
             var path = DirectoryListingService.currentPath();
+            console.log(configuration.paths.api.getDirectory + path);
             $http.get(configuration.paths.api.getDirectory + path)
                 .success(function(data) {
                     console.log(data);

@@ -56,7 +56,7 @@ define([
         paths: {
             home: "/#/listing/artists",
             api: {
-                getDirectory: "/api/librarymanager",
+                getDirectory: "/api",
                 createDirectory: "/api/librarymanager/directory",
                 upload: "/api/librarymanager/upload",
                 downloads: "/api/library/downloads"
@@ -70,7 +70,7 @@ define([
         alerts: {
             uploadProgressNotSupported: "Your browser does not support upload feedback. That's why the progress bar doesn't move.",
             uploadComplete: "Upload complete. Tracks will appear soon.",
-            trackQueueDuplicates: "Soz lol, but that track is already in the queue and due to a bizarre bug in angular-ui-tree, you can't add it again."
+            trackQueueDuplicates: "Soz, that track is already in the queue and due to a bizarre bug in angular-ui-tree, you can't add it again."
         },
 
         supportedMedia : {
@@ -84,16 +84,17 @@ define([
     Applaudio.config(["$routeProvider", function($routeProvider) {
 
         $routeProvider.
-        when('/', {
-            redirectTo : '/listing/artists'
-        }).
-        when('/listing/:url*', {
-            templateUrl: '/views/main.html',
-        }).
-        otherwise({
-            templateUrl: '/404/view.html',
-            controller: "FourOhFourCtrl"
-        });
+            when('/', {
+                redirectTo : '/listing/artists',
+                templateUrl: '/views/main.html'
+            }).
+            when('/listing/:url*', {
+                templateUrl: '/views/main.html'
+            }).
+            otherwise({
+                templateUrl: '/404/view.html',
+                controller: "FourOhFourCtrl"
+            });
 
     }]);
 
