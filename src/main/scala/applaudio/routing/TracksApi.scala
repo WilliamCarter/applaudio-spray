@@ -47,10 +47,12 @@ trait TracksApi extends HttpService with Marshallers {
               'encoding.as[String],
               'file.as[BodyPart]) { (title, artist, album, albumTrack, length, year, encoding, file) =>
 
-            val track = Track(title, artist, album, albumTrack, length, year, encoding)
-
-            complete {
-              upload(track, new ByteArrayInputStream(file.entity.data.toByteArray))
+            encoding match {
+              case "mp3" => complete {
+                upload(Track(title, artist, album, albumTrack, length, year, encoding),
+                  new ByteArrayInputStream(file.entity.data.toByteArray))
+              }
+              case _ => complete(spray.http.StatusCodes.UnsupportedMediaType, s"$encoding not supported by Applaudio")
             }
           }
         }
