@@ -16,8 +16,6 @@ class Router extends Actor with ApplaudioRouting {
 
 trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with TracksApi {
 
-
-
   val routes: Route = encodeResponse(Gzip) {
     pathPrefix("api") {
       handleExceptions(apiErrorHandler) {
@@ -28,13 +26,9 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
         }
       }
     } ~
-    get {
-      path("") {
-        getFromResource("app/index.html")
-      } ~
-      path(Rest) { staticResource =>
-        getFromResource(s"app/$staticResource")
-      }
+    path(Rest) {
+      case "" => getFromResource("app/index.html")
+      case staticResource => getFromResource(s"app/$staticResource")
     }
   }
 
@@ -51,8 +45,7 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
       }
     case e: Throwable =>
       requestUri { uri =>
-        log.warning(s"Request to $uri threw a an unknown error: ${e.getMessage}")
-        log.warning(e.toString)
+        log.warning(s"Request to $uri threw a an unknown error: ${e.getClass.getName} - ${e.getMessage}")
         complete(InternalServerError)
       }
   }
