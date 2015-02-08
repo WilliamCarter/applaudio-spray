@@ -60,7 +60,7 @@ trait TracksApi extends HttpService with Marshallers {
 
   def upload(track: Track, data: ByteArrayInputStream): Future[Track] = for {
     id <- trackService.add(track)
-    saved <- libraryService.save(id, data)
+    saved <- libraryService.save(s"$id.${track.encoding}", data)
   } yield track.copy(id = Some(id))
 
 }

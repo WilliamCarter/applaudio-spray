@@ -6,6 +6,6 @@ import scala.concurrent.Future
 
 trait LibraryService {
 
-  def save(id: Long, inputStream: ByteArrayInputStream): Future[Unit]
+  def save(filename: String, inputStream: ByteArrayInputStream): Future[Unit]
 
 }

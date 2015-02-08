@@ -11,8 +11,8 @@ import scala.concurrent.Future
 
 class DefaultLibraryService extends LibraryService with ApplaudioConfiguration {
 
-  def save(id: Long, inputStream: ByteArrayInputStream): Future[Unit] = try {
-    Future.successful { Files.copy(inputStream, Paths.get(s"$libraryRoot/$id")) }
+  def save(filename: String, inputStream: ByteArrayInputStream): Future[Unit] = try {
+    Future.successful { Files.copy(inputStream, Paths.get(s"$libraryRoot/$filename")) }
   } catch {
     case e: Throwable => Future.failed(LibraryError(e.getMessage))
   }
