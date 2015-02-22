@@ -3,7 +3,7 @@ package applaudio.models
 import org.specs2.mutable.Specification
 import spray.json._
 
-class MyServiceSpec extends Specification {
+class ArtistSpec extends Specification {
 
   val bobDylanObject = Artist("Bob Dylan")
   val bobDylanJson =

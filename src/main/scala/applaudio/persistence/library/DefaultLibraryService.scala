@@ -1,6 +1,6 @@
 package applaudio.persistence.library
 
-import java.io.ByteArrayInputStream
+import java.io.{File, FileInputStream}
 import java.nio.file.{Files, Paths}
 
 import applaudio.ApplaudioConfiguration
@@ -11,8 +11,8 @@ import scala.concurrent.Future
 
 class DefaultLibraryService extends LibraryService with ApplaudioConfiguration {
 
-  def save(filename: String, inputStream: ByteArrayInputStream): Future[Unit] = try {
-    Future.successful { Files.copy(inputStream, Paths.get(s"$libraryRoot/$filename")) }
+  def save(filename: String, file: File): Future[Unit] = try {
+    Future.successful { Files.copy(new FileInputStream(file), Paths.get(s"$libraryRoot/$filename")) }
   } catch {
     case e: Throwable => Future.failed(LibraryError(e.getMessage))
   }

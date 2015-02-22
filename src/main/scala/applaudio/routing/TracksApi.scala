@@ -1,12 +1,13 @@
 package applaudio.routing
 
-import java.io.ByteArrayInputStream
+import java.io.File
 
+import applaudio.error.RequestError
 import applaudio.models.Track
 import applaudio.persistence.library.DefaultLibraryService
 import applaudio.persistence.services.SlickTrackService
 import applaudio.services.{LibraryService, TrackService}
-import spray.http.BodyPart
+import applaudio.utilities.FileUpload
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
 
@@ -14,7 +15,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 
-trait TracksApi extends HttpService with Marshallers {
+trait TracksApi extends HttpService with FileUpload {
 
   val trackService: TrackService = new SlickTrackService
   val libraryService: LibraryService = new DefaultLibraryService
@@ -37,22 +38,10 @@ trait TracksApi extends HttpService with Marshallers {
       } ~
       path("upload") {
         post {
-          formFields(
-              'title.as[String],
-              'artist.as[Option[String]],
-              'album.as[Option[String]],
-              'albumTrack.as[Option[Int]],
-              'length.as[Option[Int]],
-              'year.as[Option[Int]],
-              'encoding.as[String],
-              'file.as[BodyPart]) { (title, artist, album, albumTrack, length, year, encoding, file) =>
-
-            encoding match {
-              case "mp3" => complete {
-                upload(Track(title, artist, album, albumTrack, length, year, encoding),
-                  new ByteArrayInputStream(file.entity.data.toByteArray))
-              }
-              case _ => complete(spray.http.StatusCodes.UnsupportedMediaType, s"$encoding not supported by Applaudio")
+          withTrackUpload { case (track, file) =>
+            // TODO: check encoding type at some point
+            complete {
+              upload(track, file)
             }
           }
         }
@@ -60,9 +49,31 @@ trait TracksApi extends HttpService with Marshallers {
     }
   }
 
-  def upload(track: Track, data: ByteArrayInputStream): Future[Track] = for {
+  def upload(track: Track, file: File): Future[Track] = for {
     id <- trackService.add(track)
-    saved <- libraryService.save(s"$id.${track.encoding}", data)
+    saved <- libraryService.save(s"$id.${track.encoding}", file)
   } yield track.copy(id = Some(id))
+
+
+  def withTrackUpload: Directive1[(Track, File)] = withMultipartFormData.flatMap { multipartFormData =>
+
+    (for {
+      title <- multipartFormData.fields.get("title")
+      encoding <- multipartFormData.fields.get("encoding")
+      file <- multipartFormData.file
+    } yield {
+
+      val track = Track(
+        title = title,
+        artist = multipartFormData.fields.get("artist"),
+        album = multipartFormData.fields.get("album"),
+        albumTrack =  multipartFormData.fields.get("albumTrack").map(_.toInt),
+        length = multipartFormData.fields.get("length").map(_.toInt),
+        year = multipartFormData.fields.get("length").map(_.toInt),
+        encoding = encoding)
+
+      provide(track, file.data)
+    }).getOrElse(failWith(RequestError("Unable to create track data from given request")))
+  }
 
 }
