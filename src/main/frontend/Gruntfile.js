@@ -179,17 +179,21 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test', [
+        'jshint:all',
         'karma:unit'
     ]);
 
-    // This will build the application in /public, and will be used when the application is deployed (> sbt run)
-    grunt.registerTask('build', [
-        'jshint:all',
-        'karma:unit',
+    // Build without testing. Used in SBT build/restart.
+    grunt.registerTask('deploy', [
         'clean:dist',
         'css',
         'requirejs',
         'copy'
+    ]);
+
+    grunt.registerTask('build', [
+        'test',
+        'deploy'
     ]);
 
     // Currently this just checks for basic mistakes and compiles the CSS.
