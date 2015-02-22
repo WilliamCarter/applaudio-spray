@@ -15,9 +15,10 @@ libraryDependencies ++= {
     "io.spray"            %%  "spray-testkit"         % sprayV            % "test",
     "com.typesafe.akka"   %%  "akka-actor"            % akkaV,
     "com.typesafe.akka"   %%  "akka-testkit"          % akkaV             % "test",
-    "org.specs2"          %% "specs2"                 % "2.3.8"           % "test",
+    "org.specs2"          %%  "specs2"                % specs2Version     % "test",
     "com.typesafe.slick"  %%  "slick"                 % "2.1.0",
     "mysql"               %   "mysql-connector-java"  % "5.1.23",
+    "com.h2database"      %   "h2"                    % "1.4.185"         % "test",
     "org.slf4j"           %   "slf4j-nop"             % "1.6.4"
   )
 }
