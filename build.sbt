@@ -1,4 +1,7 @@
-version       := "0.0.1"
+
+val applicationSettings = Seq(
+  name := "Applaudio",
+  version := "2.0.0")
 
 scalaVersion  := "2.11.2"
 
@@ -23,6 +26,8 @@ libraryDependencies ++= {
   )
 }
 
-parallelExecution in Test := false
+testOptions in Test := Seq( Tests.Filter(_ startsWith "applaudio") )
 
 Revolver.settings
+
+applicationSettings
