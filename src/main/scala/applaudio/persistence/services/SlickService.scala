@@ -13,7 +13,7 @@ class SlickService extends DatabaseDriver {
   def withSession[T](f: Session => T) = try {
     Database.forConfig(DatabaseConfigKey) withSession { implicit session: Session => Future.successful { f(session) } }
   } catch {
-    case e: Throwable => Future.failed { DatabaseError(e.getMessage) }
+    case e: Throwable => e.printStackTrace(); Future.failed { DatabaseError(e.getMessage) }
   }
 
 }
