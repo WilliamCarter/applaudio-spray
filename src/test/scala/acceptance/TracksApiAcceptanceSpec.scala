@@ -62,11 +62,21 @@ class TracksApiAcceptanceSpec extends ApplaudioAcceptance {
         status should be (BadRequest)
       }
     }
-    "return a 200 response of content type JSON when the request is valid" in new UploadRequests with FakeDatabase {
-      validUploadRequest ~> unzippedRoutes ~> check {
+    "return a 200 response of content type JSON" in new UploadRequests with FakeDatabase {
+      validUploadRequest ~> routes ~> check {
         status should be (OK)
         contentType === ContentTypes.`application/json`
       }
+    }
+    "return the newly created resource with a unique id" in new UploadRequests with FakeDatabase {
+      validUploadRequest ~> unzippedRoutes ~> check {
+        responseAs[Track].title must be equalTo "Caramel"
+        responseAs[Track].id must beSome
+      }
+      Get("/api/tracks/Blur") ~> unzippedRoutes ~> check {
+        responseAs[List[Track]].head.title must be equalTo "Caramel"
+      }
+
     }
   }
 
@@ -84,6 +94,6 @@ trait UploadRequests extends Scope with MultipartFormBuilding {
   val uploadRequestWithoutEncoding = multipartPost("/api/tracks/upload", formField("title", "Blur"), formField("artist", "Blur"),
     formField("album", "13"), fileField("/endless.mp3", MediaTypes.`audio/mpeg`))
 
-  val validUploadRequest = multipartPost("/api/tracks/upload", formField("title", "Tender"), formField("artist", "Blur"),
+  val validUploadRequest = multipartPost("/api/tracks/upload", formField("title", "Caramel"), formField("artist", "Blur"),
     formField("album", "13"), formField("encoding", "mp3"), fileField("/endless.mp3", MediaTypes.`audio/mpeg`))
 }
