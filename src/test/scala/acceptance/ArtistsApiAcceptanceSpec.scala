@@ -1,7 +1,8 @@
 package acceptance
 
-import acceptance.helpers.{ApplaudioAcceptance, FakeDatabase}
-import spray.http.StatusCodes._
+import acceptance.helpers.{ApplaudioAcceptance, FakeDatabase, Thirteen}
+import applaudio.models.Artist
+import spray.httpx.SprayJsonSupport._
 
 
 class ArtistsApiAcceptanceSpec extends ApplaudioAcceptance {
@@ -9,20 +10,12 @@ class ArtistsApiAcceptanceSpec extends ApplaudioAcceptance {
   "Requests for artists" should {
 
     "return a 200 response" in new FakeDatabase {
-      Get("/api/artists") ~> routes ~> check {
-        status should be(OK)
-      }
+      Get("/api/artists") ~> routes ~> assertJsonOk
     }
 
-    "return a JSON response" in new FakeDatabase {
-      Get("/api/artists") ~> routes ~> check {
-        mediaType.toString must contain ("application/json")
-      }
-    }
-
-    "return all artists in the database" in new FakeDatabase {
-      Get("/api/artists") ~> routes ~> check {
-        status === OK
+    "return all artists in the database" in new Thirteen {
+      Get("/api/artists") ~> unzippedRoutes ~> check {
+        responseAs[List[Artist]] must have size 1
       }
     }
   }

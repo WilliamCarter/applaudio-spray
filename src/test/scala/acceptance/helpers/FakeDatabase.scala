@@ -52,3 +52,7 @@ trait FakeDatabase extends BeforeAfter {
   }
 
 }
+
+trait Thirteen extends FakeDatabase {
+  override def bemore = insertTrack("Tender", "Blur", "13", length = 7 * 60 + 40, year = 1999)
+}

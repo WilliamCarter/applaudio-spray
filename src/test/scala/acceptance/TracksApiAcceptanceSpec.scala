@@ -1,6 +1,6 @@
 package acceptance
 
-import acceptance.helpers.{ApplaudioAcceptance, FakeDatabase}
+import acceptance.helpers.{Thirteen, ApplaudioAcceptance, FakeDatabase}
 import applaudio.models.Track
 import org.specs2.specification.Scope
 import spray.http.StatusCodes._
@@ -14,10 +14,7 @@ class TracksApiAcceptanceSpec extends ApplaudioAcceptance {
 
   "Requests for tracks by artist" should {
     "return a 200 response of content type JSON" in new FakeDatabase {
-      Get("/api/tracks/Blur") ~> routes ~> check {
-        status should be (OK)
-        contentType === ContentTypes.`application/json`
-      }
+      Get("/api/tracks/Blur") ~> routes ~> assertJsonOk
     }
     "return a list of all relevant track objects from the database" in new Thirteen {
       Get("/api/tracks/Blur") ~> unzippedRoutes ~> check {
@@ -33,10 +30,7 @@ class TracksApiAcceptanceSpec extends ApplaudioAcceptance {
 
   "Requests for tracks by album" should {
     "return a 200 response of content type JSON" in new FakeDatabase {
-      Get("/api/tracks/Blur/13") ~> routes ~> check {
-        status should be (OK)
-        contentType === ContentTypes.`application/json`
-      }
+      Get("/api/tracks/Blur/13") ~> routes ~> assertJsonOk
     }
     "return a list of all relevant track objects from the database" in new Thirteen {
       Get("/api/tracks/Blur/13") ~> unzippedRoutes ~> check {
@@ -63,10 +57,7 @@ class TracksApiAcceptanceSpec extends ApplaudioAcceptance {
       }
     }
     "return a 200 response of content type JSON" in new UploadRequests with FakeDatabase {
-      validUploadRequest ~> routes ~> check {
-        status should be (OK)
-        contentType === ContentTypes.`application/json`
-      }
+      validUploadRequest ~> routes ~> assertJsonOk
     }
     "return the newly created resource with a unique id" in new UploadRequests with FakeDatabase {
       validUploadRequest ~> unzippedRoutes ~> check {
@@ -80,10 +71,6 @@ class TracksApiAcceptanceSpec extends ApplaudioAcceptance {
     }
   }
 
-}
-
-trait Thirteen extends FakeDatabase {
-  override def bemore = insertTrack("Tender", "Blur", "13", length = 7 * 60 + 40, year = 1999)
 }
 
 trait UploadRequests extends Scope with MultipartFormBuilding {
