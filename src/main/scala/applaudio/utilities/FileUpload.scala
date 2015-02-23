@@ -36,24 +36,31 @@ trait FileUpload {
     val Some(HttpHeaders.`Content-Type`(ContentType(multipart: MultipartMediaType, _))) = request.header[HttpHeaders.`Content-Type`]
     val boundary = multipart.parameters("boundary")
 
-    val requestMimeMessage = new MIMEMessage(new FileInputStream(StreamedRequestUploader(request)), boundary)
+    val completeRequestAsFile = StreamedRequestUploader(request)
 
-    requestMimeMessage.getAttachments.asScala.foldLeft(FileUploadFormData.empty) { (formData, formPart) =>
-      nameForPart(formPart) match {
-        case FilePartIdentifier => {
-          val uploadedFile = for {
-            filename <- filenameForPart(formPart)
-            contentType <- contentTypeForPart(formPart)
-          } yield {
-            val tmpFile = new File(tmpDirectory, filename)
-            Files.copy(formPart.readOnce(), Paths.get(tmpFile.getPath), StandardCopyOption.REPLACE_EXISTING)
-            MultipartFormDataFilePart(filename, contentType, tmpFile)
+    try {
+      val requestMimeMessage = new MIMEMessage(new FileInputStream(completeRequestAsFile), boundary)
+
+      requestMimeMessage.getAttachments.asScala.foldLeft(FileUploadFormData.empty) { (formData, formPart) =>
+        nameForPart(formPart) match {
+          case FilePartIdentifier => {
+            val uploadedFile = for {
+              filename <- filenameForPart(formPart)
+              contentType <- contentTypeForPart(formPart)
+            } yield {
+              val tmpFile = new File(tmpDirectory, filename)
+              Files.copy(formPart.readOnce(), Paths.get(tmpFile.getPath), StandardCopyOption.REPLACE_EXISTING)
+              MultipartFormDataFilePart(filename, contentType, tmpFile)
+            }
+
+            FileUploadFormData(uploadedFile, formData.fields)
           }
-
-          FileUploadFormData(uploadedFile, formData.fields)
+          case name => FileUploadFormData(formData.file, formData.fields + (name -> Source.fromInputStream(formPart.readOnce).mkString))
         }
-        case name => FileUploadFormData(formData.file, formData.fields + (name -> Source.fromInputStream(formPart.readOnce).mkString))
       }
+
+    } finally {
+      completeRequestAsFile.delete()
     }
   }
 
