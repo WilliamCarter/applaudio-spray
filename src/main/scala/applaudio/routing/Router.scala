@@ -33,24 +33,21 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
   }
 
   def apiErrorHandler(implicit log: LoggingContext) = ExceptionHandler {
-    case e: DatabaseError =>
-      requestUri { uri =>
-        log.warning(s"Request to $uri threw a Database Error: ${e.message}")
-        complete(ServiceUnavailable, "Database Error")
-      }
-    case e: LibraryError =>
-      requestUri { uri =>
-        log.warning(s"Request to $uri threw a Library Error: ${e.message}")
-        complete(InternalServerError, "Library Error")
-      }
+    case e: DatabaseError => requestUri { uri =>
+      log.warning(s"Request to $uri threw a Database Error: ${e.message}")
+      complete(ServiceUnavailable, "Database Error")
+    }
+    case e: LibraryError => requestUri { uri =>
+      log.warning(s"Request to $uri threw a Library Error: ${e.message}")
+      complete(InternalServerError, "Library Error")
+    }
     case RequestError(message) => requestUri { uri =>
       complete(BadRequest, s"Request Error: $message")
     }
-    case e: Throwable =>
-      requestUri { uri =>
-        log.warning(s"Request to $uri threw a an unknown error: ${e.getClass.getName} - ${e.getMessage}")
-        complete(InternalServerError)
-      }
+    case e: Throwable => requestUri { uri =>
+      log.warning(s"Request to $uri threw a an unknown error: ${e.getClass.getName} - ${e.getMessage}")
+      complete(InternalServerError)
+    }
   }
 
 }

@@ -85,10 +85,12 @@ define([
 
         $routeProvider.
             when('/', {
-                redirectTo : '/listing/artists',
+                redirectTo : '/artists'
+            }).
+            when('/artists', {
                 templateUrl: '/views/main.html'
             }).
-            when('/listing/:url*', {
+            when('/albums', {
                 templateUrl: '/views/main.html'
             }).
             otherwise({
