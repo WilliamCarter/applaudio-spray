@@ -26,6 +26,9 @@ object ApplaudioBuild extends Build {
     scalaVersion  := "2.11.2",
     scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8"),
     libraryDependencies ++= applaudioDependencies,
+    fullClasspath in Revolver.reStart <<= (fullClasspath in Revolver.reStart, baseDirectory) map { (classpath, base) =>
+      Attributed.blank(base/"src"/"main"/"frontend") +: classpath
+    },
     testOptions in Test := Seq( Tests.Filter(_ startsWith "applaudio") ) )
 
   lazy val Acceptance = config("acceptance") extend Test
