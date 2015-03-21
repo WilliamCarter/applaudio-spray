@@ -1,8 +1,12 @@
+$pad: 10px;
+$leftPanelWidth: 500px;
+$playerWidth: $leftPanelWidth - 2*$pad;
+$playerHeight: 160px;
+$listItemHeight: 60px;
 $verdana: 28px Verdana;
 $borderSize: 2px;
 $background: #000000;
 $foreground: #FFFFFF;
-$pad: 10px;
 
 @keyframes fadeIn {
   0% { opacity: 0 }
@@ -62,7 +66,7 @@ html, body, div#container , div#base{
     height: 100%;
 }
 
-html, body, div {
+html, body, div, h1, h2, h3, h4, h5, h6 {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;

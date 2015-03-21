@@ -1,65 +1,34 @@
-<div ng-include="'components/message-bar/message-bar.html'"></div>
-<div id="base">
+<div id="browser" ng-controller="DirectoryListingCtrl as dl">
 
-    <header id="application-header">
-        <div class="player" ng-controller="PlayerCtrl">
-            <infinite-label content="display()" speed="2"></infinite-label>
-            <table class="buttons">
-                <tr>
-                    <td><button class="play_pause" ng-disabled="!playable()" ng-click="playPause()">{{playPauseLabel()}}</button></td>
-                    <td><button class="skip" ng-disabled="!skippable()" ng-click="skip()">skip</button></td>
-                </tr>
-            </table>
-        </div>
-        <div id="current-directory" ng-controller="NavigationCtrl as nav">
-            <div ng-repeat="pathElem in nav.currentPathElements track by $index" class="inline"><span>/</span><a href="{{nav.urlForDepth($index)}}">{{pathElem}}</a></div>
-        </div>
-    </header>
+  <header id="heading"><h1>{{dl.header}}</h1></header>
 
-    <div id="lower-content" ng-controller="DirectoryListingCtrl as dl">
+  <div applaudio-scrollable id="listing-menu">
 
-        <div id="left-panel">
-            <div id="track-queue" ng-controller="TrackQueueCtrl" applaudio-drop-area on-drop="addTrack(track)">
-                <div ui-tree="queueEvents" data-max-depth="0">
-                    <ol ui-tree-nodes ng-model="queue">
-                        <li ng-repeat="track in queue" ui-tree-node>
-                            <div class="queued-item" ui-tree-handle><span class="track-label">{{track.label}}</span></div>
-                        </li>
-                    </ol>
-                    <p ng-show="queue.length === 0">Queue some discs for the player</p>
-                </div>
-            </div>
-        </div>
-
-        <div applaudio-scrollable id="listing-menu" >
-
-            <div class="animate-list-item" ng-repeat="item in dl.listing | filter:query | orderBy:listingOrder">
-                <applaudio-listing-item item="item"></applaudio-listing-item>
-            </div>
-            <div id="placeholder-holder"><!-- placeholder holder seems to prevent items skipping when placeholder becomes visible. -->
-                <div class="empty-listing-placeholder" ng-if="!(dl.listing | filter:query).length" >Nothing here...</div>
-            </div>
-        </div>
-
-        <div id="right-panel">
-
-            <div id="filter">
-                <input placeholder="Filter" ng-model="query">
-            </div>
-
-            <applaudio-ui-modal button-text="'Add Directory'">
-                <add-directory-modal></add-directory-modal>
-            </applaudio-ui-modal>
-
-            <applaudio-ui-modal ng-class="{disabled: directoryIsEmpty()}" button-text="'Upload Music'">
-                <upload-modal></upload-modal>
-            </applaudio-ui-modal>
-
-            <a class=button href="{{downloadAllUrl}}" ng-class="{disabled: directoryIsEmpty()}" ng-click="verifyDownloadAction($event)">Download All</a>
-
-
-        </div>
-
+    <div class="animate-list-item" ng-repeat="item in dl.listing | filter:query | orderBy:listingOrder">
+      <applaudio-listing-item item="item"></applaudio-listing-item>
     </div>
+    <div id="placeholder-holder"><!-- placeholder holder seems to prevent items skipping when placeholder becomes visible. -->
+      <div class="empty-listing-placeholder" ng-if="!(dl.listing | filter:query).length" >Nothing here...</div>
+    </div>
+  </div>
+
+    <!--<div id="right-panel">-->
+
+        <!--<div id="filter">-->
+            <!--<input placeholder="Filter" ng-model="query">-->
+        <!--</div>-->
+
+        <!--<applaudio-ui-modal button-text="'Add Directory'">-->
+            <!--<add-directory-modal></add-directory-modal>-->
+        <!--</applaudio-ui-modal>-->
+
+        <!--<applaudio-ui-modal ng-class="{disabled: directoryIsEmpty()}" button-text="'Upload Music'">-->
+            <!--<upload-modal></upload-modal>-->
+        <!--</applaudio-ui-modal>-->
+
+        <!--<a class=button href="{{downloadAllUrl}}" ng-class="{disabled: directoryIsEmpty()}" ng-click="verifyDownloadAction($event)">Download All</a>-->
+
+
+    <!--</div>-->
 
 </div>

@@ -6,7 +6,12 @@
     <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
-    <div id="container" data-ng-view></div>
+  <div ng-include="'components/message-bar/message-bar.html'"></div>
+  <div id="left-panel">
+      <div ng-include="'components/player/player.html'"></div>
+      <div ng-include="'components/track-queue/track-queue.html'"></div>
+    </div>
+    <div id="right-panel" data-ng-view></div>
     <script src="bower_components/requirejs/require.js" data-main="main.js"></script>
   </body>
 </html>

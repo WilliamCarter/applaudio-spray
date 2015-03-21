@@ -1,7 +1,5 @@
-#track-queue {
-  border: $borderSize solid;
-  width: $leftPanelWidth;
-  height: 100%;
+.track-queue {
+  @include applaudio-component;
   min-height: 400px;
 
   ol {

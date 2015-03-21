@@ -1,0 +1,10 @@
+<div class="track-queue" ng-controller="TrackQueueCtrl" applaudio-drop-area on-drop="addTrack(track)">
+  <div ui-tree="queueEvents" data-max-depth="0">
+    <ol ui-tree-nodes ng-model="queue">
+      <li ng-repeat="track in queue" ui-tree-node>
+        <div class="queued-item" ui-tree-handle><span class="track-label">{{track.label}}</span></div>
+      </li>
+    </ol>
+    <p ng-show="queue.length === 0">Queue some discs for the player</p>
+  </div>
+</div>

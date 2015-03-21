@@ -9,7 +9,7 @@ button, .button {
     color: $foreground;
     background: $background;
     border: $borderSize solid;
-    display: block;
+    display: inline-block;
     box-sizing: border-box;
     text-align: center;
     text-decoration: none;

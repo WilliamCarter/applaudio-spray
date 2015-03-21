@@ -1,0 +1,9 @@
+<div id="applaudio-player" data-ng-controller="PlayerCtrl">
+  <div class="applaudio-player-container">
+    <infinite-label class="track-display" content="display()" speed="2"></infinite-label>
+    <div class="buttons">
+        <span class="button play_pause" ng-disabled="!playable()" ng-click="playPause()">{{playPauseLabel()}}</span>
+        <span class="button skip" ng-disabled="!skippable()" ng-click="skip()">skip</span>
+    </div>
+  </div>
+</div>

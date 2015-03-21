@@ -1,8 +1,5 @@
-$leftPanelWidth: 320px;
-$playerHeight: 140px;
-$listItemHeight: 60px;
-
 @import "styles/globals";
+@import "styles/applaudio-component";
 
 @import "styles/button";
 @import "styles/text-input";
@@ -17,75 +14,42 @@ $listItemHeight: 60px;
 @import "components/message-bar/message-bar";
 @import "components/directory-listing/upload-modal/upload-modal";
 @import "components/directory-listing/add-directory-modal/add-directory-modal";
-@import "components/player/player";
 
 
 body {
 
-    background-color: $background;
-    user-select: none;
-    cursor: default;
-    font: $verdana;
-    color: $foreground;
-    overflow: hidden;
+  padding: $pad;
+  background-color: $background;
+  user-select: none;
+  cursor: default;
+  font: $verdana;
+  color: $foreground;
+  overflow: hidden;
 
-    header {
-        height: $playerHeight + 2*$pad;
-        margin: 0px;
-        padding: 0px;
-        position: relative;
+  #left-panel {
+    width: $leftPanelWidth;
+    padding-top: $pad;
+    display: block;
+    float: left;
 
-        div.player {
-            vertical-align: top;
-            width: $leftPanelWidth;
-            height: $playerHeight;
-            margin: $pad;
-            display: inline-block;
+    @import "components/player/player";
+    @import "components/track-queue/track-queue";
+  }
 
-            div.player {
-                vertical-align: top;
-                width: $leftPanelWidth;
-                height: $playerHeight;
-                position: relative;
-
-                table {
-                  position: absolute;
-                  table-layout: fixed;
-                  bottom: 0px;
-                }
-            }
-        }
+  #right-panel {
+    display: block;
+    float: left;
+  }
 
 
-        div#current-directory {
-            padding: $pad;
-            display: inline-block;
-            transform: translate(0, -50%);
-            position: absolute;
-            top: 50%;
-            font-size: 60px;
+  #browser {
 
-            a, span {
-                margin: 0;
-                padding: 0;
-            }
-        }
+    #heading {
+      height: $playerHeight;
+      margin-left: 2*$pad;
+      vertical-align: middle;
+      line-height: $playerHeight;
     }
-
-    #lower-content {
-
-        padding: $pad;
-        padding-top: 0px;
-
-        #left-panel {
-            width: $leftPanelWidth;
-            height: 100%;
-            display: table-cell;
-            vertical-align: top;
-            font-size: 14px;
-
-            @import "components/track-queue/track-queue";
-        }
 
         #listing-menu {
             height: inherit;
@@ -119,13 +83,6 @@ body {
                 }
             }
 
-        }
-
-        #right-panel {
-            width: 20%;
-            height: inherit;
-            display: table-cell;
-            vertical-align: top;
         }
     }
 }

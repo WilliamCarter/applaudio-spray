@@ -74,6 +74,7 @@ define([
 
         var directoryListing = this;
 
+        directoryListing.header = "Artists";
         directoryListing.listing = [];
 
         $scope.directoryIsEmpty = function() {

@@ -1,32 +1,24 @@
-.player {
+#applaudio-player {
 
-  border: $borderSize solid;
-  padding: 10px;
+  height: $playerHeight;
 
-  infinite-label {
-    height: 40px;
-    margin-bottom: 10px;
-  }
+  .applaudio-player-container {
+    @include applaudio-component;
+    height: $playerHeight - 4*$pad;
+    padding: $pad;
+    padding-top: 2*$pad;
+    margin-bottom: 5*$pad;
+    position: relative;
 
-  table, th, tr, td {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-  }
-  table.buttons {
+    .track-display { }
 
-    height: 30px;
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-    border: 4px;
+    .buttons {
+      position: absolute;
+      bottom: -2*$pad;
 
-    button {
-      margin: 0px;
-      padding: 8px;
-      font-size: 12px;
-      box-sizing: border-box;
+      .button {
+        width: (($playerWidth - 3*$pad) / 2) - $borderSize;
+      }
     }
-
   }
 }
