@@ -6,7 +6,8 @@ define([
     "angularRoute",
 
     "controllers/artists-controller",
-    "controllers/albums-controller",
+    "controllers/artist-albums-controller",
+    "controllers/album-controller",
 
     "services/utils",
 
@@ -56,8 +57,12 @@ define([
             home: "/artists",
             api: {
                 allArtists: "/api/artists",
-                albums: "/api/albums"
-//                createDirectory: "/api/librarymanager/directory",
+                albumsBy: function(artist) {
+                    return "/api/albums/" + artist;
+                },
+                album: function(artist, album) {
+                    return "/api/tracks/" + artist + "/" + album;
+                }
 //                upload: "/api/librarymanager/upload",
 //                downloads: "/api/library/downloads"
             }
@@ -95,7 +100,11 @@ define([
             }).
             when('/albums/:artist', {
                 templateUrl: '/views/listing.html',
-                controller: 'AlbumsController'
+                controller: 'ArtistAlbumsController'
+            }).
+            when('/albums/:artist/:album', {
+                templateUrl: '/views/listing.html',
+                controller: 'AlbumController'
             }).
             otherwise({
                 templateUrl: '/404/view.html',

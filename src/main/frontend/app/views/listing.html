@@ -9,10 +9,10 @@
   <div applaudio-scrollable id="listing">
 
     <div class="animate-list-item" ng-repeat="item in listing | filter:query | orderBy:listingOrder">
-      <div ng-switch on="type">
+      <div ng-switch on="listingItemType">
         <div ng-switch-when="artist"artist-listing-item item="item"></div>
         <div ng-switch-when="album" album-listing-item item="item"></div>
-        <div ng-switch-when="track" track-listing-item item="item"></div>
+        <div ng-switch-when="track" track-listing-item item="item">track</div>
       </div>
 
     </div>

@@ -2,18 +2,18 @@ define([
     "controllers/controllers"
 ], function (ApplaudioControllers) {
 
-    ApplaudioControllers.controller('AlbumsController', [
+    ApplaudioControllers.controller('ArtistAlbumsController', [
         "configuration",
         "MessageBarService",
         "$scope",
         "$http",
         "$routeParams",
     function (configuration, MessageBarService, $scope, $http, $routeParams) {
-        $scope.type = "album";
-        $scope.artist = $routeParams.artist
+        $scope.listingItemType = "album";
+        $scope.artist = $routeParams.artist;
         $scope.heading = $scope.artist;
 
-        $http.get(configuration.paths.api.albums + "/" + $scope.artist).success(function(data) {
+        $http.get(configuration.paths.api.albumsBy($scope.artist)).success(function(data) {
             console.log("success");
             console.log(data);
             $scope.listing = data;

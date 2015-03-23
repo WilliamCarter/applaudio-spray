@@ -8,7 +8,7 @@ define([
         "$scope",
         "$http",
     function (configuration, MessageBarService, $scope, $http) {
-        $scope.type = "artist";
+        $scope.listingItemType = "artist";
         $scope.heading = "Artists";
 
         $http.get(configuration.paths.api.allArtists).success(function(data) {

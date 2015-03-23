@@ -76,6 +76,10 @@ html, body, div, h1, h2, h3, h4, h5, h6 {
     display: inline;
 }
 
+h1 {
+  font-weight: 100;
+}
+
 a {
     color: $foreground;
     text-decoration: none;

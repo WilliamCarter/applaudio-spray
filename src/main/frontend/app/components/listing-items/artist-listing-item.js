@@ -1,5 +1,3 @@
-'use strict';
-
 define([
     "components/listing-items/listing-items"
 ], function (ListingItems) {
@@ -17,7 +15,7 @@ define([
             link: function(scope, element, attrs) {
                 scope.clickArtist = function() {
                     $location.path("/albums/" + scope.item.name);
-                }
+                };
             }
         };
 
