@@ -6,6 +6,22 @@
   border: $borderSize solid;
   box-sizing: border-box;
   background-color: $background;
+  cursor: pointer;
+  transition: background-color 200ms linear;
+
+  &:hover {
+    transition: background-color 0ms linear;
+    background-color: #333333;
+  }
+
+  &:active {
+    background-color: #999999;
+  }
+
+  a {
+    color: #FFFFFF;
+  }
+
 
   .label {
     position: absolute;

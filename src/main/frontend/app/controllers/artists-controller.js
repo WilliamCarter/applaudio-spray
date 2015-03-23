@@ -2,19 +2,14 @@ define([
     "controllers/controllers"
 ], function (ApplaudioControllers) {
 
-    ApplaudioControllers.controller('ArtistsCtrl', [
+    ApplaudioControllers.controller('ArtistsController', [
         "configuration",
         "MessageBarService",
         "$scope",
         "$http",
     function (configuration, MessageBarService, $scope, $http) {
+        $scope.type = "artist";
         $scope.heading = "Artists";
-
-        $scope.messagePlease = function() {
-            MessageBarService.addMessage("This is your requested message.", 'standard', 6000);
-
-        };
-
 
         $http.get(configuration.paths.api.allArtists).success(function(data) {
             console.log("success");

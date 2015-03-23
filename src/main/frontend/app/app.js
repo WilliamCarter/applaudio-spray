@@ -6,6 +6,7 @@ define([
     "angularRoute",
 
     "controllers/artists-controller",
+    "controllers/albums-controller",
 
     "services/utils",
 
@@ -18,10 +19,6 @@ define([
 
     "components/navigation/navigation",
     "components/message-bar/message-bar",
-    "components/directory-listing/directory-listing",
-    "components/directory-listing/listing-item/listing-item",
-    "components/directory-listing/upload-modal/upload-modal",
-    "components/directory-listing/add-directory-modal/add-directory-modal",
     "components/player/player",
     "components/track-queue/track-queue"
 
@@ -47,7 +44,6 @@ define([
         "ApplaudioPlayer",
         "ApplaudioTrackQueue",
         "MessageBar",
-        "DirectoryListing",
 
         "ApplaudioControllers",
         "ApplaudioUI",
@@ -57,9 +53,10 @@ define([
     Applaudio.constant("configuration", {
 
         paths: {
-            home: "/#/listing/artists",
+            home: "/artists",
             api: {
-                allArtists: "/api/artists"
+                allArtists: "/api/artists",
+                albums: "/api/albums"
 //                createDirectory: "/api/librarymanager/directory",
 //                upload: "/api/librarymanager/upload",
 //                downloads: "/api/library/downloads"
@@ -77,29 +74,32 @@ define([
         },
 
         supportedMedia : {
-            types: ["audio/mpeg", "audio/mp3", "audio/ogg"],
-            extensions: [".mpeg", ".mp3", ".ogg"]
+            types: ["audio/mpeg", "audio/mp3"],
+            extensions: [".mpeg", ".mp3"]
         }
 
     });
 
-    console.log("Configuring Applaudio");
-    Applaudio.config(["$routeProvider", function($routeProvider) {
+    Applaudio.config([
+        "configuration",
+        "$routeProvider",
+    function(configuration, $routeProvider) {
 
         $routeProvider.
             when('/', {
                 redirectTo : '/artists'
             }).
             when('/artists', {
-                templateUrl: '/views/artists.html',
-                controller: 'ArtistsCtrl'
+                templateUrl: '/views/listing.html',
+                controller: 'ArtistsController'
             }).
-            when('/albums', {
-                templateUrl: '/views/artists.html'
+            when('/albums/:artist', {
+                templateUrl: '/views/listing.html',
+                controller: 'AlbumsController'
             }).
             otherwise({
                 templateUrl: '/404/view.html',
-                controller: "FourOhFourCtrl"
+                controller: "FourOhFourController" // non-existent!
             });
 
     }]);
