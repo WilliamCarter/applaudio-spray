@@ -1,0 +1,16 @@
+.listing-item {
+  height: $listItemHeight; // declare height so it will match animation height.
+  position:relative;
+  padding: $pad;
+  margin-bottom: -$borderSize;
+  border: $borderSize solid;
+  box-sizing: border-box;
+  background-color: $background;
+
+  .label {
+    position: absolute;
+    left: $listItemHeight;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}

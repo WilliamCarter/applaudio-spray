@@ -1,8 +1,9 @@
 input {
-    margin: 0px;
-    padding: $pad;
-    border: $borderSize solid;
-    background: $background;
-    color: $foreground;
-    font: $verdana;
+  margin: 0px;
+  padding: $pad;
+  border: $borderSize solid;
+  box-sizing: border-box;
+  background: $background;
+  color: $foreground;
+  font: $verdana;
 }

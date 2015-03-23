@@ -5,7 +5,7 @@ $message-bar-width: 400px;
   position: absolute;
   margin: 0 auto;
   max-width: 1000px;
-  top: 0;
+  top: $pad;
   left: 0;
   right: 0;
   text-align: center;
@@ -14,12 +14,12 @@ $message-bar-width: 400px;
   #message-bar {
     color: #fff;
     border: 1px solid;
-    font-size: 14px;
+    font-size: 20px;
     display: inline-block;
     min-width: $message-bar-width;
     background-color: #000000;
 
-    p {
+    #message-bar-content {
       text-align: center;
       vertical-align: middle;
       padding: 8px;

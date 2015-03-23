@@ -4,21 +4,13 @@
 @import "styles/button";
 @import "styles/text-input";
 
-@import "styles/404";
-
 @import "ui/infinite-label/infintite-label";
 @import "ui/scrollable/scrollable";
 @import "ui/progress-bar/progress-bar";
-@import "ui/modal/modal";
-
-@import "components/message-bar/message-bar";
-@import "components/directory-listing/upload-modal/upload-modal";
-@import "components/directory-listing/add-directory-modal/add-directory-modal";
-
 
 body {
 
-  padding: $pad;
+  padding: 8*$pad;
   background-color: $background;
   user-select: none;
   cursor: default;
@@ -26,9 +18,10 @@ body {
   color: $foreground;
   overflow: hidden;
 
+  @import "components/message-bar/message-bar";
+
   #left-panel {
     width: $leftPanelWidth;
-    padding-top: $pad;
     display: block;
     float: left;
 
@@ -37,12 +30,14 @@ body {
   }
 
   #right-panel {
-    display: block;
+    width: calc(100% - #{$leftPanelWidth});
     float: left;
   }
 
 
   #browser {
+
+    padding-left: $pad;
 
     #heading {
       height: $playerHeight;
@@ -51,40 +46,47 @@ body {
       line-height: $playerHeight;
     }
 
-        #listing-menu {
-            height: inherit;
-            display: table-cell;
-            padding-left: $pad;
-            padding-right: $pad;
-            position: relative;
+    #filter {
+      width: 100%;
+      margin-right: -2*$pad;
+      margin-bottom: $pad;
+      position: relative;
 
-            .scrollable {
-                padding-bottom: $pad;
-
-                @import "components/directory-listing/listing-item/listing-item";
-
-                .animate-list-item.ng-enter {
-                    animation: 500ms addToList;
-                }
-
-                .animate-list-item.ng-leave {
-                    animation: 500ms removeFromList;
-                }
-
-                .empty-listing-placeholder {
-                    padding: $pad;
-                }
-                .empty-listing-placeholder.ng-enter {
-                    opacity:0;
-                    animation: 1000ms delayVisibility;
-                }
-                .empty-listing-placeholder.ng-enter-active {
-                    opacity:1;
-                }
-            }
-
-        }
+      input {
+        width: 100%;
+      }
     }
+
+    #listing {
+      width: 100%;
+      padding-bottom: $pad;
+
+      .scrollable {
+
+        @import "components/listing-items/listing-items";
+
+        .animate-list-item.ng-enter {
+          animation: 500ms addToList;
+        }
+
+        .animate-list-item.ng-leave {
+          animation: 500ms removeFromList;
+        }
+
+        .empty-listing-placeholder {
+          padding: $pad;
+        }
+        .empty-listing-placeholder.ng-enter {
+          opacity:0;
+          animation: 1000ms delayVisibility;
+        }
+        .empty-listing-placeholder.ng-enter-active {
+          opacity:1;
+        }
+      }
+
+    }
+  }
 }
 
 .angular-ui-tree-drag {

@@ -1,0 +1,20 @@
+<div id="browser">
+
+  <header id="heading"><h1>{{heading}}</h1></header>
+
+  <div id="filter">
+    <input placeholder="Filter" ng-model="query">
+  </div>
+
+  <div applaudio-scrollable id="listing">
+
+    <div class="animate-list-item" ng-repeat="item in listing | filter:query | orderBy:listingOrder">
+      <div artist-listing-item item="item"></div>
+    </div>
+    <div id="placeholder-holder"><!-- placeholder holder seems to prevent items skipping when placeholder becomes visible. -->
+      <div class="empty-listing-placeholder" ng-if="!(listing | filter:query).length" >Nothing here...</div>
+    </div>
+
+  </div>
+
+</div>

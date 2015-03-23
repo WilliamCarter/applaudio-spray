@@ -5,6 +5,8 @@ define([
     "angularAnimate",
     "angularRoute",
 
+    "controllers/artists-controller",
+
     "services/utils",
 
     "ui/draggable/draggable",
@@ -47,6 +49,7 @@ define([
         "MessageBar",
         "DirectoryListing",
 
+        "ApplaudioControllers",
         "ApplaudioUI",
         "ApplaudioUtilities"
     ]);
@@ -56,10 +59,10 @@ define([
         paths: {
             home: "/#/listing/artists",
             api: {
-                getDirectory: "/api",
-                createDirectory: "/api/librarymanager/directory",
-                upload: "/api/librarymanager/upload",
-                downloads: "/api/library/downloads"
+                allArtists: "/api/artists"
+//                createDirectory: "/api/librarymanager/directory",
+//                upload: "/api/librarymanager/upload",
+//                downloads: "/api/library/downloads"
             }
         },
 
@@ -70,7 +73,7 @@ define([
         alerts: {
             uploadProgressNotSupported: "Your browser does not support upload feedback. That's why the progress bar doesn't move.",
             uploadComplete: "Upload complete. Tracks will appear soon.",
-            trackQueueDuplicates: "Soz, that track is already in the queue and due to a bizarre bug in angular-ui-tree, you can't add it again."
+            trackQueueDuplicates: "That track is already in the queue and due to a bizarre bug in angular-ui-tree, you can't add it again. !?"
         },
 
         supportedMedia : {
@@ -88,10 +91,11 @@ define([
                 redirectTo : '/artists'
             }).
             when('/artists', {
-                templateUrl: '/views/main.html'
+                templateUrl: '/views/artists.html',
+                controller: 'ArtistsCtrl'
             }).
             when('/albums', {
-                templateUrl: '/views/main.html'
+                templateUrl: '/views/artists.html'
             }).
             otherwise({
                 templateUrl: '/404/view.html',
