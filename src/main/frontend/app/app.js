@@ -8,12 +8,12 @@ define([
     "controllers/artists-controller",
     "controllers/artist-albums-controller",
     "controllers/album-controller",
+    "controllers/upload-controller",
 
     "services/utils",
 
     "ui/draggable/draggable",
     "ui/infinite-label/infinite-label",
-    "ui/modal/modal",
     "ui/on-enter/on-enter",
     "ui/progress-bar/progress-bar",
     "ui/scrollable/scrollable",
@@ -92,24 +92,28 @@ define([
         "$routeProvider",
     function(configuration, $routeProvider) {
 
-        $routeProvider.
-            when('/', {
+        $routeProvider
+            .when("/", {
                 redirectTo : configuration.paths.home
-            }).
-            when('/artists', {
-                templateUrl: '/views/listing.html',
-                controller: 'ArtistsController'
-            }).
-            when('/albums/:artist', {
-                templateUrl: '/views/listing.html',
-                controller: 'ArtistAlbumsController'
-            }).
-            when('/albums/:artist/:album', {
-                templateUrl: '/views/listing.html',
-                controller: 'AlbumController'
-            }).
-            otherwise({
-                templateUrl: '/404/view.html',
+            })
+            .when("/artists", {
+                templateUrl: "/views/listing.html",
+                controller: "ArtistsController"
+            })
+            .when("/albums/:artist", {
+                templateUrl: "/views/listing.html",
+                controller: "ArtistAlbumsController"
+            })
+            .when("/albums/:artist/:album", {
+                templateUrl: "/views/listing.html",
+                controller: "AlbumController"
+            })
+            .when("/upload", {
+                templateUrl: "views/upload.html",
+                controller: "UploadController"
+            })
+            .otherwise({
+                templateUrl: "/404/view.html",
                 controller: "FourOhFourController" // non-existent!
             });
 
