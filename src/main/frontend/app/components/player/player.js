@@ -14,7 +14,7 @@ define([
 
 
         $scope.display = function(){
-            return PlayerService.hasTrack() ? PlayerService.getTrack().label : "Empty";
+            return PlayerService.hasTrack() ? PlayerService.trackDisplay(): "Empty";
         };
 
         $scope.playPauseLabel = function() {
@@ -80,8 +80,8 @@ define([
             return currentTrack !== null;
         };
 
-        PlayerService.getTrack = function() {
-            return currentTrack;
+        PlayerService.trackDisplay = function() {
+            return currentTrack.artist ? currentTrack.artist + " - " + currentTrack.title : currentTrack.title;
         };
 
         PlayerService.play = function() {

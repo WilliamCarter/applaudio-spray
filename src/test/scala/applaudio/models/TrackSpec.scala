@@ -39,7 +39,7 @@ class TrackSpec extends Specification with JsonMatchers {
       |    "length": 217,
       |    "year": 1978,
       |    "encoding": "mp3",
-      |    "url": "/library/$id.mp3",
+      |    "location": "/library/$id.mp3",
       |    "downloadUrl": "/library/downloads/$id.mp3"
       |}
     """.stripMargin.parseJson

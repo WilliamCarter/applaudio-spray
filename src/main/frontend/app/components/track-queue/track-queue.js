@@ -58,8 +58,6 @@ define([
         $scope.queue = TrackQueueService.queue;
 
         $scope.addTrack = function(track) {
-//            console.log("TrackQueueCtrl.addTrack()");
-//            console.log(track);
             TrackQueueService.queueTrack(track);
             $scope.$apply();
         };

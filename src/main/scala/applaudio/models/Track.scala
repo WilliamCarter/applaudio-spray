@@ -30,7 +30,7 @@ object Track extends DefaultJsonProtocol {
       ("length", jsNumberOrNull(track.length)),
       ("year", jsNumberOrNull(track.year)),
       ("encoding", JsString(track.encoding)),
-      ("url", jsStringOrNull(track.id.map { id => s"/library/$id.${track.encoding}" })),
+      ("location", jsStringOrNull(track.id.map { id => s"/library/$id.${track.encoding}" })),
       ("downloadUrl", track.id.map { id => JsString(s"/library/downloads/$id.${track.encoding}") }.getOrElse(JsNull))
     )
 

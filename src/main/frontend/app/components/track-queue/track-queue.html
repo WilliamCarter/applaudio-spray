@@ -2,7 +2,7 @@
   <div ui-tree="queueEvents" data-max-depth="0">
     <ol ui-tree-nodes ng-model="queue">
       <li ng-repeat="track in queue" ui-tree-node>
-        <div class="queued-item" ui-tree-handle><span class="track-label">{{track.label}}</span></div>
+        <div class="queued-item" ui-tree-handle><span class="track-label">{{track.title}}</span></div>
       </li>
     </ol>
     <p class="empty-placeholder" ng-show="queue.length === 0">Empty</p>
