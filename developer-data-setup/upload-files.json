@@ -1,0 +1,42 @@
+[
+    {
+        "file": "/Users/cartew01/Music/Bjork/Post/Army of Me.mp3",
+        "title": "Army of Me",
+        "artist": "Bjork",
+        "album": "Post",
+        "albumTrack": 1,
+        "length": 234,
+        "year": 1995,
+        "encoding": "mp3"
+    },
+    {
+        "file": "/Users/cartew01/Music/Bjork/Post/Enjoy.mp3",
+        "title": "Enjoy",
+        "artist": "Bjork",
+        "album": "Post",
+        "albumTrack": 5,
+        "length": 237,
+        "year": 1995,
+        "encoding": "mp3"
+    },
+    {
+        "file": "/Users/cartew01/Music/Bjork/Post/Isobel.mp3",
+        "title": "Isobel",
+        "artist": "Bjork",
+        "album": "Post",
+        "albumTrack": 7,
+        "length": 347,
+        "year": 1995,
+        "encoding": "mp3"
+    },
+    {
+        "file": "/Users/cartew01/Music/Bjork/Volta/The Dull Flame of Desire.mp3",
+        "title": "The Dull Flame of Desire",
+        "artist": "Bjork",
+        "album": "Volta",
+        "albumTrack": 3,
+        "length": 450,
+        "year": 2007,
+        "encoding": "mp3"
+    }
+]
