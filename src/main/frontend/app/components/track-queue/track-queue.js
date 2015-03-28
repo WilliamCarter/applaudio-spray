@@ -13,8 +13,8 @@ define([
         TrackQueueService.queue = [];
 
         TrackQueueService.queueTrack = function(track) {
-//            console.log("TrackQueueService.queueTrack()");
-//            console.log(track);
+            console.log("TrackQueueService.queueTrack()");
+            console.log(track);
             var containsLocation = function(otherTrack) {
                 return track.location === otherTrack.location;
             };
