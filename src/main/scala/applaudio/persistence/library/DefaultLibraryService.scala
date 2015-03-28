@@ -11,12 +11,15 @@ import scala.concurrent.Future
 
 class DefaultLibraryService extends LibraryService with ApplaudioConfiguration {
 
+  override def get(filename: String) = new File(path(filename))
+
   def save(filename: String, file: File): Future[Unit] = try {
-    Future.successful { Files.copy(new FileInputStream(file), Paths.get(s"$libraryRoot/$filename")) }
+    Future.successful { Files.copy(new FileInputStream(file), Paths.get(path(filename))) }
   } catch {
     case e: Throwable => Future.failed(LibraryError(e.getMessage))
   }
 
-  override def delete(filename: String) = Files.delete(Paths.get(s"$libraryRoot/$filename"))
+  override def delete(filename: String) = Files.delete(Paths.get(path(filename)))
 
+  private def path(filename: String) = s"$libraryRoot/$filename"
 }

@@ -33,7 +33,7 @@ class TrackSpec extends Specification with JsonMatchers {
 
   "The Artist Object" can {
      "serialise to JSON" in {
-       jamesAndTheColdGun.toJson must be equalTo (jamesAndTheColdGunJson)
+       jamesAndTheColdGun.toJson must be equalTo jamesAndTheColdGunJson
      }
    }
 

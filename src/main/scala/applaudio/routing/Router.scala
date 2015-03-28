@@ -1,7 +1,10 @@
 package applaudio.routing
 
 import akka.actor.Actor
-import applaudio.error.{RequestError, DatabaseError, LibraryError}
+import applaudio.error.{DatabaseError, LibraryError, RequestError}
+import applaudio.persistence.library.DefaultLibraryService
+import applaudio.persistence.services.{SlickAlbumService, SlickArtistService, SlickTrackService}
+import applaudio.services.{AlbumService, ArtistService, LibraryService, TrackService}
 import spray.http.MediaTypes._
 import spray.http.StatusCodes._
 import spray.httpx.encoding.Gzip
@@ -16,19 +19,29 @@ class Router extends Actor with ApplaudioRouting {
 
 trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with TracksApi {
 
-  val routes: Route = encodeResponse(Gzip) {
-    pathPrefix("api") {
-      handleExceptions(apiErrorHandler) {
-        respondWithMediaType(`application/json`) {
-          artistRoutes ~
-          albumRoutes ~
-          trackRoutes
-        }
-      }
+  val libraryService: LibraryService = new DefaultLibraryService
+  val artistService: ArtistService = new SlickArtistService
+  val albumService: AlbumService = new SlickAlbumService
+  val trackService: TrackService = new SlickTrackService
+
+  val routes: Route = {
+    path("library" / Segment) { filename =>
+      getFromFile(libraryService.get(filename))
     } ~
-    path(Rest) {
-      case "" => getFromResource("app/index.html")
-      case staticResource => getFromResource(s"app/$staticResource")
+    encodeResponse(Gzip) {
+      pathPrefix("api") {
+        handleExceptions(apiErrorHandler) {
+          respondWithMediaType(`application/json`) {
+            artistRoutes ~
+              albumRoutes ~
+              trackRoutes
+          }
+        }
+      } ~
+      path(Rest) {
+        case "" => getFromResource("app/index.html")
+        case staticResource => getFromResource(s"app/$staticResource")
+      }
     }
   }
 
