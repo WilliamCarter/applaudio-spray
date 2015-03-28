@@ -1,4 +1,4 @@
-<div class="track-queue" ng-controller="TrackQueueCtrl" applaudio-drop-area on-drop="addTrack(track)">
+<div class="track-queue" ng-controller="TrackQueueController" applaudio-drop-area on-drop="addTrack(track)">
   <div ui-tree="queueEvents" data-max-depth="0">
     <ol ui-tree-nodes ng-model="queue">
       <li ng-repeat="track in queue" ui-tree-node>

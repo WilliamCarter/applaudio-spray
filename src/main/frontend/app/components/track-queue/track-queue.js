@@ -39,7 +39,7 @@ define([
 
     }]);
 
-    ApplaudioTrackQueue.controller("TrackQueueCtrl", [
+    ApplaudioTrackQueue.controller("TrackQueueController", [
         "$scope",
         "TrackQueueService",
     function($scope, TrackQueueService) {

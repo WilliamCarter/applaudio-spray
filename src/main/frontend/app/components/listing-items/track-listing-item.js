@@ -3,8 +3,8 @@ define([
 ], function (ListingItems) {
 
     ListingItems.directive("trackListingItem", [
-        "TrackQueueService"
-    , function(TrackQueueService) {
+        "TrackQueueService",
+    function(TrackQueueService) {
 
         return {
             restrict: 'A',

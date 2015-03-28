@@ -37,7 +37,7 @@ define([
     }]);
 
 
-    MessageBar.controller('MessageBarCtrl', [
+    MessageBar.controller('MessageBarController', [
         "$scope",
         "$interval",
         "MessageBarService",

@@ -78,7 +78,7 @@ define(["components/message-bar/message-bar", "angularMocks"], function() {
             inject(function ($controller, $rootScope, $interval) {
                 scope = $rootScope.$new();
                 interval = $interval;
-                $controller('MessageBarCtrl', {
+                $controller('MessageBarController', {
                     $scope: scope,
                     $interval: interval,
                     MessageBarService: mockMessageBarService

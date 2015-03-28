@@ -6,7 +6,7 @@ define([
 
     var ApplaudioPlayer = angular.module("ApplaudioPlayer", ["ApplaudioTrackQueue"]);
 
-    ApplaudioPlayer.controller("PlayerCtrl", [
+    ApplaudioPlayer.controller("PlayerController", [
         "$scope",
         "PlayerService",
         "TrackQueueService",
@@ -38,7 +38,7 @@ define([
         };
 
         var play = function () {
-            console.log("PlayerCtrl.play()");
+            console.log("PlayerController.play()");
             if (!PlayerService.hasTrack()) {
                 nextTrack();
             }
@@ -46,12 +46,12 @@ define([
         };
 
         var pause = function() {
-            console.log("PlayerCtrl.pause()");
+            console.log("PlayerController.pause()");
             PlayerService.pause();
         };
 
         var nextTrack = function() {
-            console.log("PlayerCtrl.nextTrack()");
+            console.log("PlayerController.nextTrack()");
             PlayerService.setTrack(TrackQueueService.getNext());
         };
 
