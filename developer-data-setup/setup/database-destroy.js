@@ -1,10 +1,12 @@
+var log = require("../lib/log");
+
 module.exports = {
 
     execute: function(then) {
 
-        console.log("Destroying all data in the database");
-
         var mysql = require('mysql');
+
+        log.major("Destroying all data in the database");
 
         var connection = mysql.createConnection({
             host     : "localhost",
@@ -28,7 +30,7 @@ module.exports = {
 
         ].forEach(function(databaseQuery) {
 
-            console.log("Executing database query: '" + databaseQuery + "'");
+            log.minor("Executing database query: '" + databaseQuery + "'");
 
             connection.query(databaseQuery, function(error) {
                 if (error) {
@@ -42,8 +44,7 @@ module.exports = {
 
         connection.end();
 
-        console.log("Database destroy done!");
-
+        log.minor("Database destroy done!");
         then();
     }
 };
