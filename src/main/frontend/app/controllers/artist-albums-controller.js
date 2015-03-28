@@ -11,7 +11,9 @@ define([
     function (configuration, MessageBarService, $scope, $http, $routeParams) {
         $scope.listingItemType = "album";
         $scope.artist = $routeParams.artist;
-        $scope.heading = $scope.artist;
+        $scope.headingLinks = [
+            { label: "Artists", href: configuration.paths.home },
+            { label: $scope.artist, href: configuration.paths.albumsBy($scope.artist) } ];
 
         $http.get(configuration.paths.api.albumsBy($scope.artist)).success(function(data) {
             console.log("success");

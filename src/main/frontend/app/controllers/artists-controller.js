@@ -9,7 +9,7 @@ define([
         "$http",
     function (configuration, MessageBarService, $scope, $http) {
         $scope.listingItemType = "artist";
-        $scope.heading = "Artists";
+        $scope.headingLinks = [ { label: "Artists", href: configuration.paths.home } ];
 
         $http.get(configuration.paths.api.allArtists).success(function(data) {
             console.log("success");

@@ -18,7 +18,6 @@ define([
     "ui/progress-bar/progress-bar",
     "ui/scrollable/scrollable",
 
-    "components/navigation/navigation",
     "components/message-bar/message-bar",
     "components/player/player",
     "components/track-queue/track-queue"
@@ -41,7 +40,6 @@ define([
         "ngRoute",
         "ngAnimate",
 
-        "Navigation",
         "ApplaudioPlayer",
         "ApplaudioTrackQueue",
         "MessageBar",
@@ -55,6 +53,12 @@ define([
 
         paths: {
             home: "/artists",
+            albumsBy: function(artist) {
+                return "/albums/" + artist;
+            },
+            album: function(artist, album) {
+                return "/albums/" + artist + "/" + album;
+            },
             api: {
                 allArtists: "/api/artists",
                 albumsBy: function(artist) {
@@ -63,8 +67,6 @@ define([
                 album: function(artist, album) {
                     return "/api/tracks/" + artist + "/" + album;
                 }
-//                upload: "/api/librarymanager/upload",
-//                downloads: "/api/library/downloads"
             }
         },
 
@@ -92,7 +94,7 @@ define([
 
         $routeProvider.
             when('/', {
-                redirectTo : '/artists'
+                redirectTo : configuration.paths.home
             }).
             when('/artists', {
                 templateUrl: '/views/listing.html',

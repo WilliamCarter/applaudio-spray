@@ -12,7 +12,11 @@ define([
         $scope.listingItemType = "track";
         $scope.artist = $routeParams.artist;
         $scope.album = $routeParams.album;
-        $scope.heading = $scope.album;
+        $scope.headingLinks = [
+            { label: "Artists", href: configuration.paths.home },
+            { label: $scope.artist, href: configuration.paths.albumsBy($scope.artist) },
+            { label: $scope.album, href: configuration.paths.album($scope.artist, $scope.album) }
+        ];
 
         $http.get(configuration.paths.api.album($scope.artist, $scope.album)).success(function(data) {
             console.log("success");
