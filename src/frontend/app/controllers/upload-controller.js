@@ -5,9 +5,10 @@ define([
     ApplaudioControllers.controller('UploadController', [
         "configuration",
         "MessageBarService",
+        "UploadService",
         "$scope",
         "$http",
-    function (configuration, MessageBarService, $scope, $http) {
+    function (configuration, MessageBarService, UploadService, $scope) {
 
         console.log("Upload Controller defined");
 
@@ -16,9 +17,16 @@ define([
             fileInputElement.click();
         };
 
-        $scope.readUploadFiles = function(passed) {
+        $scope.readUploadFiles = function(files) {
             console.log("readUploadFiles()");
-            console.log(passed);
+            console.log(files);
+            console.log(files[0].name);
+            $scope.$apply(function() {
+                $scope.filename = files[0].name;
+            });
+
+            UploadService.getMetadata(files[0]);
+
         };
 
 

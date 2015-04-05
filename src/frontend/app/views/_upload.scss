@@ -38,6 +38,10 @@
       position: relative;
       overflow: hidden;
       float: left;
+
+      .filename {
+        padding: $pad;
+      }
     }
 
   }

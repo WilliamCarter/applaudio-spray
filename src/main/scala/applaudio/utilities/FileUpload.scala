@@ -24,7 +24,6 @@ object FileUploadFormData {
 trait FileUpload {
 
   val UTF8 = Charset.forName("UTF-8")
-  val FilePartIdentifier = "files[]"
 
   val tmpDirectory = Paths.get(System.getProperty("java.io.tmpdir")).toFile
 
@@ -36,16 +35,15 @@ trait FileUpload {
     val Some(HttpHeaders.`Content-Type`(ContentType(multipart: MultipartMediaType, _))) = request.header[HttpHeaders.`Content-Type`]
     val boundary = multipart.parameters("boundary")
 
-    val completeRequestAsFile = StreamedRequestUploader(request)
+    StreamedRequestUploader.withUploadedRequestAsFile(request) { requestAsFile =>
 
-    try {
-      val requestMimeMessage = new MIMEMessage(new FileInputStream(completeRequestAsFile), boundary)
+      val requestMimeMessage = new MIMEMessage(new FileInputStream(requestAsFile), boundary)
 
       requestMimeMessage.getAttachments.asScala.foldLeft(FileUploadFormData.empty) { (formData, formPart) =>
-        nameForPart(formPart) match {
-          case FilePartIdentifier => {
+
+        filenameForPart(formPart) match {
+          case Some(filename) => {
             val uploadedFile = for {
-              filename <- filenameForPart(formPart)
               contentType <- contentTypeForPart(formPart)
             } yield {
               val tmpFile = new File(tmpDirectory, filename)
@@ -55,12 +53,11 @@ trait FileUpload {
 
             FileUploadFormData(uploadedFile, formData.fields)
           }
-          case name => FileUploadFormData(formData.file, formData.fields + (name -> Source.fromInputStream(formPart.readOnce).mkString))
+          case None =>
+            val nonFileField = nameForPart(formPart) -> Source.fromInputStream(formPart.readOnce).mkString
+            FileUploadFormData(formData.file, formData.fields + nonFileField)
         }
       }
-
-    } finally {
-      completeRequestAsFile.delete()
     }
   }
 
@@ -84,7 +81,7 @@ object StreamedRequestUploader {
 
   lazy val MaxChunkSize = 1024 * 128 // get this from configuration
 
-  def apply(request: HttpRequest): File = {
+  private def uploadRequestToTempDirectory(request: HttpRequest): File = {
     val tmpFile = File.createTempFile("applaudio-upload", ".tmp")
     val output = new FileOutputStream(tmpFile)
 
@@ -97,4 +94,9 @@ object StreamedRequestUploader {
     tmpFile
   }
 
+  
+  def withUploadedRequestAsFile[T](request:HttpRequest)(task: File => T): T = {
+    val requestAsFile = uploadRequestToTempDirectory(request)
+    try task(requestAsFile) finally requestAsFile.delete()
+  }
 }

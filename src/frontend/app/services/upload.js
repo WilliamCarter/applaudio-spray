@@ -11,6 +11,21 @@ define(["angular"], function (angular) {
 
         var progressSubscriberCallbacks = [];
 
+        UploadService.getMetadata = function(file, then) {
+            var metadataForm = new FormData();
+            metadataForm.append("file[]", file);
+
+            var request = new XMLHttpRequest();
+            request.open('POST', configuration.paths.api.metadata, true);
+            request.addEventListener("load", function(data) {
+                console.log("Metadata request done");
+                console.log(request.status);
+                console.log(data);
+            });
+            request.send(metadataForm);
+
+        };
+
         UploadService.subscribeForProgressUpdates = function(callback) {
             progressSubscriberCallbacks.push(callback);
         };
