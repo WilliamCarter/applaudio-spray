@@ -32,6 +32,9 @@ body {
   #right-panel {
     width: calc(100% - #{$leftPanelWidth});
     float: left;
+
+    @import "views/upload";
+
   }
 
 
@@ -60,7 +63,7 @@ body {
 
     #listing {
       width: 100%;
-      max-height: 400px;
+      max-height: $bottomPanelHeight;
       padding-bottom: $pad;
 
       .scrollable {

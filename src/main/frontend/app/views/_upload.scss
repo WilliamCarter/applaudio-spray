@@ -1,0 +1,44 @@
+#upload-form-container {
+
+  height: $bottomPanelHeight;
+
+  .form-row {
+    width: 80%;
+    margin-bottom: $pad;
+    position: relative;
+    float: left;
+
+
+    .form-label {
+      width: 100px;
+      padding: $pad;
+      text-align: right;
+      display: inline-block;
+      float: left;
+    }
+
+    .form-input {
+      display: block;
+      overflow: hidden;
+
+      input {
+        width: 100%;
+      }
+
+      button{
+        margin-top: 0px;
+      }
+
+    }
+
+    .half-row {
+      width: 50%;
+      box-sizing: border-box;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      float: left;
+    }
+
+  }
+}

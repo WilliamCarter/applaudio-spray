@@ -1,5 +1,53 @@
 <div id="browser">
+
   <header><h1>Upload</h1></header>
 
+  <div applaudio-scrollable id="upload-form-container">
+
+    <form>
+
+      <div class="form-row">
+        <div class="half-row">
+          <span class="form-label">File: </span>
+          <span class="form-input"><button>Select</button></span>
+        </div>
+        <div class="half-row">
+          <span class="form-input filename">{{upload.file}}</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <span class="form-label">Title: </span>
+        <span class="form-input"><input type="text" ng-model="upload.title"/></span>
+      </div>
+      <div class="form-row">
+        <span class="form-label">Artist: </span>
+        <span class="form-input"><input type="text" ng-model="upload.artist"/></span>
+      </div>
+      <div class="form-row">
+        <span class="form-label">Album: </span>
+        <span class="form-input"><input type="text" ng-model="upload.album"/></span>
+      </div>
+
+      <div class="form-row">
+        <span class="half-row">
+          <span class="form-label">Track: </span>
+          <span class="form-input"><input type="text" ng-model="upload.trackNumber"/></span>
+        </span>
+        <div class="half-row">
+          <span class="form-label">Year: </span>
+          <span class="form-input"><input type="text" ng-model="upload.year"/></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <span class="form-label">Encoding: </span>
+        <span class="form-input"><input type="text" ng-model="upload.encoding"/></span>
+      </div>
+
+    </form>
+
+
+  </div>
 
 </div>

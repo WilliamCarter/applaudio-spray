@@ -1,6 +1,6 @@
 .track-queue {
   @include applaudio-component;
-  min-height: 400px;
+  height: $bottomPanelHeight;
 
   ol {
     padding: 0px;

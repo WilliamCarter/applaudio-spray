@@ -26,10 +26,12 @@ trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with T
 
   val routes: Route = {
     path("library" / Segment) { filename =>
+      println("get library file")
       getFromFile(libraryService.get(filename))
     } ~
     encodeResponse(Gzip) {
       pathPrefix("api") {
+        println("api")
         handleExceptions(apiErrorHandler) {
           respondWithMediaType(`application/json`) {
             artistRoutes ~

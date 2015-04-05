@@ -6,4 +6,11 @@ input {
   background: $background;
   color: $foreground;
   font: $verdana;
+
+  &.disabled, &:disabled {
+    cursor: default;
+    color: #AAAAAA;
+    background-color: #000000;
+  }
+
 }
