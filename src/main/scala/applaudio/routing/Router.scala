@@ -4,7 +4,7 @@ import akka.actor.Actor
 import applaudio.error.{DatabaseError, LibraryError, RequestError}
 import applaudio.persistence.library.DefaultLibraryService
 import applaudio.persistence.services.{SlickAlbumService, SlickArtistService, SlickTrackService}
-import applaudio.services.{AlbumService, ArtistService, LibraryService, TrackService}
+import applaudio.services._
 import spray.http.MediaTypes._
 import spray.http.StatusCodes._
 import spray.httpx.encoding.Gzip
@@ -17,26 +17,26 @@ class Router extends Actor with ApplaudioRouting {
   override def receive: Receive = runRoute(routes)
 }
 
-trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with TracksApi {
+trait ApplaudioRouting extends HttpService with ArtistsApi with AlbumsApi with TracksApi with MetadataApi {
 
   val libraryService: LibraryService = new DefaultLibraryService
   val artistService: ArtistService = new SlickArtistService
   val albumService: AlbumService = new SlickAlbumService
   val trackService: TrackService = new SlickTrackService
+  val metadataService = new JAudioTaggerMetadataService
 
   val routes: Route = {
     path("library" / Segment) { filename =>
-      println("get library file")
       getFromFile(libraryService.get(filename))
     } ~
     encodeResponse(Gzip) {
       pathPrefix("api") {
-        println("api")
         handleExceptions(apiErrorHandler) {
           respondWithMediaType(`application/json`) {
             artistRoutes ~
               albumRoutes ~
-              trackRoutes
+              trackRoutes ~
+              metadataRoutes
           }
         }
       } ~
