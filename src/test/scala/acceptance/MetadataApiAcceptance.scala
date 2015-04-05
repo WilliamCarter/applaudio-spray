@@ -22,8 +22,6 @@ class MetadataApiAcceptance extends ApplaudioAcceptance {
     }
     "return a Track representation of the posted file" in new MetadataRequests {
       metadataRequest ~> unzippedRoutes ~> check {
-        println(status)
-        println(body)
         responseAs[Track] must be equalTo coverMeMetadata
       }
     }

@@ -1,4 +1,3 @@
-// Generated on 2014-03-20 using generator-angular 0.7.1
 'use strict';
 
 // # Globbing
@@ -24,7 +23,7 @@ module.exports = function (grunt) {
         paths: {
           // configurable paths
           app: 'app',
-          dist: '../resources/app'
+          dist: '../main/resources/app'
         },
 
         // Ensure there are no obvious javascript mistakes

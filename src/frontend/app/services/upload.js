@@ -13,15 +13,20 @@ define(["angular"], function (angular) {
 
         UploadService.getMetadata = function(file, then) {
             var metadataForm = new FormData();
-            metadataForm.append("file[]", file);
+            metadataForm.append(file.name, file);
 
             var request = new XMLHttpRequest();
             request.open('POST', configuration.paths.api.metadata, true);
             request.addEventListener("load", function(data) {
-                console.log("Metadata request done");
-                console.log(request.status);
-                console.log(data);
+                if (request.status !== 200) {
+                    var errorMessage = "Error hitting " + configuration.paths.api.metadata + ": " + request.status;
+                    console.log(errorMessage);
+                    MessageBarService.addMessage(errorMessage, "error");
+                } else {
+                    then(JSON.parse(request.response));
+                }
             });
+
             request.send(metadataForm);
 
         };

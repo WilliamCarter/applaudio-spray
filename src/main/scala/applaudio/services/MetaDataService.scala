@@ -13,10 +13,6 @@ trait MetadataService {
 class JAudioTaggerMetadataService extends MetadataService {
 
   def metadataForFile(mp3: File) = {
-
-    println("metadataForFile")
-    println(mp3)
-
     val tag = AudioFileIO.read(mp3).getTag
     Track(title = tag.getFirst(FieldKey.TITLE),
       artist = Option(tag.getFirst(FieldKey.ARTIST)),

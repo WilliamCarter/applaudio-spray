@@ -10,7 +10,7 @@ define([
         "$http",
     function (configuration, MessageBarService, UploadService, $scope) {
 
-        console.log("Upload Controller defined");
+        $scope.upload = $scope.upload || {};
 
         $scope.clickFileInputElement = function() {
             var fileInputElement = document.querySelector("#upload-file-input");
@@ -18,14 +18,20 @@ define([
         };
 
         $scope.readUploadFiles = function(files) {
-            console.log("readUploadFiles()");
-            console.log(files);
-            console.log(files[0].name);
             $scope.$apply(function() {
                 $scope.filename = files[0].name;
             });
 
-            UploadService.getMetadata(files[0]);
+            UploadService.getMetadata(files[0], function(metadata) {
+                $scope.$apply(function() {
+                    $scope.upload.title = metadata.title;
+                    $scope.upload.artist = metadata.artist;
+                    $scope.upload.album = metadata.album;
+                    $scope.upload.albumTrack = metadata.albumTrack;
+                    $scope.upload.year = metadata.year;
+                    $scope.upload.encoding = metadata.encoding;
+                });
+            });
 
         };
 
