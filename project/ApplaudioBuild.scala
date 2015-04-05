@@ -16,6 +16,7 @@ object ApplaudioBuild extends Build {
     "com.typesafe.slick"  %%  "slick"                 % "2.1.0",
     "mysql"               %   "mysql-connector-java"  % "5.1.23",
     "org.slf4j"           %   "slf4j-nop"             % "1.6.4",
+    "org"                 %   "jaudiotagger"          % "2.0.3",
     "io.spray"            %%  "spray-testkit"         % sprayV            % "test",
     "com.typesafe.akka"   %%  "akka-testkit"          % akkaV             % "test",
     "org.specs2"          %%  "specs2"                % specs2Version     % "test",
@@ -27,9 +28,11 @@ object ApplaudioBuild extends Build {
     scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8"),
     libraryDependencies ++= applaudioDependencies,
     fullClasspath in Revolver.reStart <<= (fullClasspath in Revolver.reStart, baseDirectory) map { (classpath, base) =>
-      Attributed.blank(base/"src"/"main"/"frontend") +: classpath
+      Attributed.blank(base / "src" / "frontend") +: classpath
     },
-    testOptions in Test := Seq( Tests.Filter(_ startsWith "applaudio") ) )
+    testOptions in Test := Seq( Tests.Filter(_ startsWith "applaudio") ),
+    shellPrompt := { state: State => "[applaudio] > " }
+  )
 
   lazy val Acceptance = config("acceptance") extend Test
   lazy val acceptanceSettings = inConfig(Acceptance)(Defaults.testTasks) ++ Seq (
