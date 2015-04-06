@@ -3,24 +3,29 @@ package applaudio.services
 import java.io.File
 
 import applaudio.models.Track
-import org.jaudiotagger.audio.AudioFileIO
+import org.jaudiotagger.audio.{AudioFile, AudioFileIO}
 import org.jaudiotagger.tag.FieldKey
 
 trait MetadataService {
-  def metadataForFile(file: File): Track
+  def allMetadata(file: File): Track
+  def trackLength(file: File): Int
 }
 
 class JAudioTaggerMetadataService extends MetadataService {
 
-  def metadataForFile(mp3: File) = {
-    val tag = AudioFileIO.read(mp3).getTag
-    Track(title = tag.getFirst(FieldKey.TITLE),
+  def allMetadata(mp3: File): Track = {
+    val audioFile = AudioFileIO.read(mp3)
+    val tag = audioFile.getTag
+    Track(title = Option(tag.getFirst(FieldKey.TITLE)).getOrElse(""),
       artist = Option(tag.getFirst(FieldKey.ARTIST)),
       album = Option(tag.getFirst(FieldKey.ALBUM)),
       albumTrack = Option(tag.getFirst(FieldKey.TRACK)).map(_.toInt),
       year = Option(tag.getFirst(FieldKey.YEAR)).map(_.toInt),
-      length = None,
+      length = Some(trackLength(audioFile)),
       encoding = "mp3")
   }
+
+  def trackLength(file: File): Int = trackLength(AudioFileIO.read(file))
+  def trackLength(audioFile: AudioFile): Int = audioFile.getAudioHeader.getTrackLength
 
 }

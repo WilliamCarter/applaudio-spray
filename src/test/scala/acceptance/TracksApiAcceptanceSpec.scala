@@ -76,11 +76,11 @@ class TracksApiAcceptanceSpec extends ApplaudioAcceptance {
 trait UploadRequests extends Scope with MultipartFormBuilding {
 
   val uploadRequestWithoutTitle = multipartPost("/api/tracks/upload", formField("album", "13"), formField("encoding", "mp3"),
-    fileField("/endless.mp3", MediaTypes.`audio/mpeg`))
+    fileField("endless.mp3", MediaTypes.`audio/mpeg`))
 
   val uploadRequestWithoutEncoding = multipartPost("/api/tracks/upload", formField("title", "Blur"), formField("artist", "Blur"),
-    formField("album", "13"), fileField("/endless.mp3", MediaTypes.`audio/mpeg`))
+    formField("album", "13"), fileField("endless.mp3", MediaTypes.`audio/mpeg`))
 
   val validUploadRequest = multipartPost("/api/tracks/upload", formField("title", "Caramel"), formField("artist", "Blur"),
-    formField("album", "13"), formField("encoding", "mp3"), fileField("/endless.mp3", MediaTypes.`audio/mpeg`))
+    formField("album", "13"), formField("encoding", "mp3"), fileField("endless.mp3", MediaTypes.`audio/mpeg`))
 }

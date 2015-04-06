@@ -4,7 +4,7 @@ import java.io.File
 
 import applaudio.error.RequestError
 import applaudio.models.Track
-import applaudio.services.{LibraryService, TrackService}
+import applaudio.services.{MetadataService, LibraryService, TrackService}
 import applaudio.utilities.FileUpload
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -16,6 +16,7 @@ import scala.concurrent.Future
 trait TracksApi extends HttpService with FileUpload {
 
   def trackService: TrackService
+  def metadataService: MetadataService
   def libraryService: LibraryService
 
   val trackRoutes: Route = {

@@ -1,16 +1,13 @@
 package testutilities
 
-import java.io.File
-
 import spray.http._
 import spray.httpx.RequestBuilding
 
-trait MultipartFormBuilding extends RequestBuilding {
+trait MultipartFormBuilding extends RequestBuilding with TestResources {
 
   def formField(key: String, value: String) = BodyPart(HttpEntity(value), key)
-  def fileField(resourcePath: String, contentType: ContentType) = {
-    val file = new File(getClass.getResource(resourcePath).toURI)
-    BodyPart(file, "files[]", contentType)
+  def fileField(resource: String, contentType: ContentType) = {
+    BodyPart(getResource(resource), "files[]", contentType)
   }
 
   def multipartPost(url: String, parts: BodyPart*): HttpRequest = {

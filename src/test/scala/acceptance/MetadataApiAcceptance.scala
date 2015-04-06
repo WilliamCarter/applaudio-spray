@@ -31,7 +31,7 @@ class MetadataApiAcceptance extends ApplaudioAcceptance {
 trait MetadataRequests extends Scope with MultipartFormBuilding {
 
   val badMetadataRequest = multipartPost("/api/metadata", formField("artist", "Björk"))
-  val metadataRequest = multipartPost("/api/metadata", fileField("/Cover Me.mp3", MediaTypes.`audio/mpeg`))
+  val metadataRequest = multipartPost("/api/metadata", fileField("Cover Me.mp3", MediaTypes.`audio/mpeg`))
 
-  val coverMeMetadata = Track("Cover Me", Some("Björk"), Some("Post"), Some(10), None, Some(1995), "mp3")
+  val coverMeMetadata = Track("Cover Me", Some("Björk"), Some("Post"), Some(10), Some(126), Some(1995), "mp3")
 }

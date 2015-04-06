@@ -16,7 +16,7 @@ trait MetadataApi extends HttpService with FileUpload {
         withMultipartFormData { formData =>
           complete {
             formData.file match {
-              case Some(file) => metadataService.metadataForFile(file.data)
+              case Some(file) => metadataService.allMetadata(file.data)
               case None => BadRequest
             }
           }
