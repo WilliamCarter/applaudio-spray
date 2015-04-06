@@ -11,6 +11,11 @@ define([
     function (configuration, MessageBarService, UploadService, $scope) {
 
         $scope.upload = $scope.upload || {};
+        var formFieldIds = [ "title", "artist", "album", "albumTrack", "year", "encoding" ];
+
+        var clearForm = function() {
+            $scope.upload = {};
+        };
 
         $scope.clickFileInputElement = function() {
             var fileInputElement = document.querySelector("#upload-file-input");
@@ -19,22 +24,27 @@ define([
 
         $scope.readUploadFiles = function(files) {
             $scope.$apply(function() {
-                $scope.filename = files[0].name;
+                $scope.upload.file = files[0];
+                $scope.upload.filename = $scope.upload.file.name;
             });
 
             UploadService.getMetadata(files[0], function(metadata) {
                 $scope.$apply(function() {
-                    $scope.upload.title = metadata.title;
-                    $scope.upload.artist = metadata.artist;
-                    $scope.upload.album = metadata.album;
-                    $scope.upload.albumTrack = metadata.albumTrack;
-                    $scope.upload.year = metadata.year;
-                    $scope.upload.encoding = metadata.encoding;
+                    formFieldIds.forEach(function(field) {
+                       $scope.upload[field] = metadata[field];
+                    });
                 });
             });
-
         };
 
+        $scope.startUpload = function() {
+            MessageBarService.addMessage("Uploading file: " + $scope.upload.filename);
+            UploadService.upload($scope.upload, function(data) {
+                console.log("Upload complete");
+                console.log(data);
+            });
+            clearForm();
+        }
 
     }]);
 

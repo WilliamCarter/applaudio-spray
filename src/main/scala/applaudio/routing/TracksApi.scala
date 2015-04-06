@@ -67,7 +67,7 @@ trait TracksApi extends HttpService with FileUpload {
         album = multipartFormData.fields.get("album"),
         albumTrack =  multipartFormData.fields.get("albumTrack").map(_.toInt),
         length = multipartFormData.fields.get("length").map(_.toInt),
-        year = multipartFormData.fields.get("length").map(_.toInt),
+        year = multipartFormData.fields.get("year").map(_.toInt),
         encoding = encoding)
 
       provide(track, file.data)

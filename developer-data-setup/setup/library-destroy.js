@@ -11,7 +11,7 @@ module.exports = {
 
             if (!exists) {
                 log.minor("Library does not exist. Creating new library at '" + libraryPath + "'")
-                fs.mkdir(libraryPath)
+                fs.mkdir(libraryPath, then);
             } else {
 
                 fs.readdir(libraryPath, function(error, files) {

@@ -67,7 +67,8 @@ define([
                 album: function(artist, album) {
                     return "/api/tracks/" + artist + "/" + album;
                 },
-                metadata: "/api/metadata"
+                metadata: "/api/metadata",
+                upload: "/api/tracks/upload"
             }
         },
 

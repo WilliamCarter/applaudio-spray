@@ -44,5 +44,13 @@
       }
     }
 
+    &.file-input-row {
+      margin-bottom: $pad*2;
+    }
+
+    &.submit-row {
+      margin-top: $pad;
+    }
+
   }
 }

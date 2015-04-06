@@ -17,7 +17,7 @@ define(["angular"], function (angular) {
 
             var request = new XMLHttpRequest();
             request.open('POST', configuration.paths.api.metadata, true);
-            request.addEventListener("load", function(data) {
+            request.addEventListener("load", function() {
                 if (request.status !== 200) {
                     var errorMessage = "Error hitting " + configuration.paths.api.metadata + ": " + request.status;
                     console.log(errorMessage);
@@ -31,28 +31,36 @@ define(["angular"], function (angular) {
 
         };
 
+        UploadService.upload = function(data, then) {
+            var uploadData = new FormData();
+            for (property in data) {
+                uploadData.append(property, data[property]);
+            }
+
+            var request = new XMLHttpRequest();
+            registerProgressEvents(request.upload);
+            request.open('POST', configuration.paths.api.upload, true);
+
+            request.addEventListener("load", function() {
+                if (request.status !== 200) {
+                    var errorMessage = "Error hitting " + configuration.paths.api.upload + ": " + request.status;
+                    console.log(errorMessage);
+                    MessageBarService.addMessage(errorMessage, "error");
+                } else {
+                    then(JSON.parse(request.response));
+                }
+            });
+
+            request.send(uploadData);
+
+        };
+
+
         UploadService.subscribeForProgressUpdates = function(callback) {
             progressSubscriberCallbacks.push(callback);
         };
 
-        UploadService.upload = function(path, uploadFiles) {
-
-            console.log("UploadService.upload(" + path + ")");
-
-            var uploadData = new FormData();
-            uploadData.append("path", path);
-            uploadFiles.forEach(function(file){
-                uploadData.append(file.name, file);
-            });
-
-            var xhr = new XMLHttpRequest();
-            UploadService.registerProgressEvents(xhr.upload);
-            xhr.open('POST', configuration.paths.api.upload, true);
-
-            xhr.send(uploadData);
-        };
-
-        UploadService.registerProgressEvents = function(xhrUploadObject) {
+        var registerProgressEvents = function(xhrUploadObject) {
             console.log("UploadService.registerProgressEvents.");
 
             xhrUploadObject.addEventListener("load", function(e) {
@@ -77,6 +85,7 @@ define(["angular"], function (angular) {
             }, false);
 
         };
+
     }]);
 
 });
