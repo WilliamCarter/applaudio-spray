@@ -10,7 +10,8 @@ define([
             restrict: "A",
             templateUrl: "components/heading/heading.html",
             scope: {
-                segments: "="
+                segments: "=",
+                navigation: "="
             }
         };
     });

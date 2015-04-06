@@ -10,6 +10,10 @@ define([
         "$http",
     function (configuration, MessageBarService, UploadService, $scope) {
 
+        $scope.headingLinks = [ { label: "Upload", href: configuration.paths.upload } ];
+        $scope.navigation = { label: "Artists", href: configuration.paths.home };
+
+
         $scope.upload = $scope.upload || {};
         var formFieldIds = [ "title", "artist", "album", "albumTrack", "year", "encoding" ];
 

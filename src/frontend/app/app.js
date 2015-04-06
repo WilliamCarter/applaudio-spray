@@ -53,6 +53,7 @@ define([
 
         paths: {
             home: "/artists",
+            upload: "/upload",
             albumsBy: function(artist) {
                 return "/albums/" + artist;
             },

@@ -1,1 +1,4 @@
-<h1><span ng-repeat="segment in segments"><a ng-href="#{{segment.href}}">{{segment.label}}</a><span ng-show="!$last"> > </span></span></h1>
+<header>
+  <h1><span ng-repeat="segment in segments"><a href="#{{segment.href}}">{{segment.label}}</a><span ng-show="!$last"> > </span></span></h1>
+  <a class="button navigation" href="#{{navigation.href}}">{{navigation.label}}</a>
+</header>
