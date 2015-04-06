@@ -43,7 +43,28 @@ body {
     padding-left: $pad;
 
     header {
-      height: $playerHeight - 2*$pad;
+
+      position: relative;
+
+      .heading {
+        width: calc(100% - #{$navigationButtonWidth});
+        height: $playerHeight - 2*$pad;
+        margin-left: 2*$pad;
+        margin-bottom: 2*$pad;
+        vertical-align: middle;
+        line-height: $playerHeight - 2*$pad;
+      }
+
+      a.navigation {
+        width: $navigationButtonWidth;
+        margin: 0px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+      }
+    }
+
+    .heading {
       margin-left: 2*$pad;
       margin-bottom: 2*$pad;
       vertical-align: middle;
