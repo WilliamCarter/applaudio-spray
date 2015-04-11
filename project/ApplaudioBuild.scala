@@ -1,7 +1,8 @@
-import sbt._
 import sbt.Keys._
-import spray.revolver.RevolverPlugin.Revolver
+import sbt._
 import sbtassembly.AssemblyKeys._
+import spray.revolver.RevolverPlugin.Revolver
+import sbt.complete.DefaultParsers._
 
 object ApplaudioBuild extends Build {
 
@@ -23,7 +24,7 @@ object ApplaudioBuild extends Build {
     "org.specs2"          %%  "specs2"                % specs2Version     % "test",
     "com.h2database"      %   "h2"                    % "1.4.185"         % "test" )
 
-  lazy val applaudioSettings = Seq (
+  lazy val applaudioSettings = Seq(
     version       := "2.0.0",
     scalaVersion  := "2.11.2",
     scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8"),
@@ -35,18 +36,21 @@ object ApplaudioBuild extends Build {
     shellPrompt := { state: State => "[applaudio] > " } )
 
   lazy val Acceptance = config("acceptance") extend Test
-  lazy val acceptanceSettings = inConfig(Acceptance)(Defaults.testTasks) ++ Seq (
+  lazy val acceptanceSettings = inConfig(Acceptance)(Defaults.testTasks) ++ Seq(
     testOptions in Acceptance := Seq( Tests.Filter(_ startsWith "acceptance") ),
     parallelExecution in Acceptance := false )
 
-  lazy val grunt = taskKey[Unit]("Run grunt deployment")
+  lazy val grunt = inputKey[Unit]("Run grunt tasks")
   lazy val gruntSettings = Seq(
-    grunt := { Process("grunt build", file("src/frontend")).! } )
+    grunt :=  {
+      val gruntTaskId = spaceDelimited("<arg>").parsed.head
+      println(s"gruntTaskId: $gruntTaskId")
+      Process(s"grunt $gruntTaskId", file("src/frontend")).!
+    } )
 
-  lazy val build = taskKey[Unit]("Build application using Grunt and the SBT-Assembly plugin")
   lazy val deploymentSettings = Seq(
     test in assembly := {},
-    assembly <<= assembly.dependsOn(grunt) )
+    assembly <<= assembly.dependsOn(grunt.toTask(" deploy")) )
 
   lazy val Applaudio = Project(
     id = "Applaudio",
