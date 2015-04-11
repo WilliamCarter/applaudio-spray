@@ -16,8 +16,9 @@ define([
         $scope.headingLinks = [
             { label: "Artists", href: configuration.paths.home },
             { label: $scope.artist, href: configuration.paths.albumsBy($scope.artist) },
-            { label: $scope.album, href: configuration.paths.album($scope.artist, $scope.album) }
-        ];
+            { label: $scope.album, href: configuration.paths.album($scope.artist, $scope.album) } ];
+
+        $scope.listingOrder = function(track) { return track.albumTrack; }
 
         $http.get(configuration.paths.api.album($scope.artist, $scope.album)).success(function(data) {
             console.log("success");
