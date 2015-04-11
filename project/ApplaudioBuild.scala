@@ -1,6 +1,7 @@
 import sbt._
 import sbt.Keys._
 import spray.revolver.RevolverPlugin.Revolver
+import sbtassembly.AssemblyKeys._
 
 object ApplaudioBuild extends Build {
 
@@ -31,18 +32,26 @@ object ApplaudioBuild extends Build {
       Attributed.blank(base / "src" / "frontend") +: classpath
     },
     testOptions in Test := Seq( Tests.Filter(_ startsWith "applaudio") ),
-    shellPrompt := { state: State => "[applaudio] > " }
-  )
+    shellPrompt := { state: State => "[applaudio] > " } )
 
   lazy val Acceptance = config("acceptance") extend Test
   lazy val acceptanceSettings = inConfig(Acceptance)(Defaults.testTasks) ++ Seq (
     testOptions in Acceptance := Seq( Tests.Filter(_ startsWith "acceptance") ),
     parallelExecution in Acceptance := false )
 
+  lazy val grunt = taskKey[Unit]("Run grunt deployment")
+  lazy val gruntSettings = Seq(
+    grunt := { Process("grunt build", file("src/frontend")).! } )
+
+  lazy val build = taskKey[Unit]("Build application using Grunt and the SBT-Assembly plugin")
+  lazy val deploymentSettings = Seq(
+    test in assembly := {},
+    assembly <<= assembly.dependsOn(grunt) )
+
   lazy val Applaudio = Project(
     id = "Applaudio",
     base = file("."),
     configurations = Seq(Acceptance),
-    settings = Revolver.settings ++ applaudioSettings ++ acceptanceSettings)
+    settings = Revolver.settings ++ applaudioSettings ++ acceptanceSettings ++ gruntSettings ++ deploymentSettings )
 
 }
