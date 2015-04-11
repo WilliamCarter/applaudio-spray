@@ -33,7 +33,7 @@ define(["angular"], function (angular) {
 
         UploadService.upload = function(data, then) {
             var uploadData = new FormData();
-            for (property in data) {
+            for (var property in data) {
                 uploadData.append(property, data[property]);
             }
 

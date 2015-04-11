@@ -48,7 +48,7 @@ define([
                 console.log(data);
             });
             clearForm();
-        }
+        };
 
     }]);
 
