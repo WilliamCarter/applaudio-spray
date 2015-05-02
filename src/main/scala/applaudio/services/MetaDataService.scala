@@ -1,6 +1,7 @@
 package applaudio.services
 
 import java.io.File
+import java.util.logging.{Logger, Level}
 
 import applaudio.models.Track
 import org.jaudiotagger.audio.{AudioFile, AudioFileIO}
@@ -12,6 +13,8 @@ trait MetadataService {
 }
 
 class JAudioTaggerMetadataService extends MetadataService {
+
+  Logger.getLogger("org.jaudiotagger").setLevel(Level.OFF)
 
   def allMetadata(mp3: File): Track = {
     val audioFile = AudioFileIO.read(mp3)
