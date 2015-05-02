@@ -43,14 +43,14 @@ object ApplaudioBuild extends Build {
   lazy val grunt = inputKey[Unit]("Run grunt tasks")
   lazy val gruntSettings = Seq(
     grunt :=  {
-      val gruntTaskId = spaceDelimited("<arg>").parsed.head
-      println(s"gruntTaskId: $gruntTaskId")
+      val gruntTaskId = StringBasic.parsed.stripPrefix(":")
+      println(s"grunt $gruntTaskId")
       Process(s"grunt $gruntTaskId", file("src/frontend")).!
     } )
 
   lazy val deploymentSettings = Seq(
     test in assembly := {},
-    assembly <<= assembly.dependsOn(grunt.toTask(" deploy")) )
+    assembly <<= assembly.dependsOn(grunt.toTask("deploy")) )
 
   lazy val Applaudio = Project(
     id = "Applaudio",
