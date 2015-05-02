@@ -1,12 +1,23 @@
+## Intellij ##
 /.idea/
-/project/boot/
-/project/plugins/project
+
+## SBT ##
+project/boot/
+project/plugins/project
+project/project
 target/
-lib_managed/
-src_managed/
-test-output/
-*.iml
-.classpath_nb
 
 ## Frontend app build directory ##
 /src/main/resources/app/*
+
+## Server ##
+server
+pushtopi.sh
+
+# Certificates
+*.crt
+*.key
+*.ca
+*.csr
+*.p12
+*.keystore
