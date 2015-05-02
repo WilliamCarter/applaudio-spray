@@ -6,28 +6,33 @@ import sbt.complete.DefaultParsers._
 
 object ApplaudioBuild extends Build {
 
-  val akkaV = "2.3.6"
-  val sprayV = "1.3.2"
-  val specs2Version = "2.4.2"
+  val ApplaudioVersion = "2.0.0"
+
+  val ScalaVersion = "2.11.2"
+  val AkkaVersion = "2.3.6"
+  val SprayVersion = "1.3.2"
+  val SprayJsonVersion = "1.3.1"
+  val Specs2Version = "2.4.2"
 
   lazy val applaudioDependencies = Seq (
-    "io.spray"            %%  "spray-can"             % sprayV,
-    "io.spray"            %%  "spray-routing"         % sprayV,
-    "io.spray"            %%  "spray-json"            % "1.3.1",
-    "com.typesafe.akka"   %%  "akka-actor"            % akkaV,
+    "io.spray"            %%  "spray-can"             % SprayVersion,
+    "io.spray"            %%  "spray-routing"         % SprayVersion,
+    "io.spray"            %%  "spray-json"            % SprayJsonVersion,
+    "com.typesafe.akka"   %%  "akka-actor"            % AkkaVersion,
     "com.typesafe.slick"  %%  "slick"                 % "2.1.0",
     "mysql"               %   "mysql-connector-java"  % "5.1.23",
     "org.slf4j"           %   "slf4j-nop"             % "1.6.4",
     "org"                 %   "jaudiotagger"          % "2.0.3",
-    "io.spray"            %%  "spray-testkit"         % sprayV            % "test",
-    "com.typesafe.akka"   %%  "akka-testkit"          % akkaV             % "test",
-    "org.specs2"          %%  "specs2"                % specs2Version     % "test",
+    "io.spray"            %%  "spray-testkit"         % SprayVersion      % "test",
+    "com.typesafe.akka"   %%  "akka-testkit"          % AkkaVersion       % "test",
+    "org.specs2"          %%  "specs2"                % Specs2Version     % "test",
     "com.h2database"      %   "h2"                    % "1.4.185"         % "test" )
 
   lazy val applaudioSettings = Seq(
-    version       := "2.0.0",
-    scalaVersion  := "2.11.2",
+    version       := ApplaudioVersion,
+    scalaVersion  := ScalaVersion,
     scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8"),
+    resolvers     += "spray" at "http://repo.spray.io/",
     libraryDependencies ++= applaudioDependencies,
     fullClasspath in Revolver.reStart <<= (fullClasspath in Revolver.reStart, baseDirectory) map { (classpath, base) =>
       Attributed.blank(base / "src" / "frontend") +: classpath
@@ -49,6 +54,7 @@ object ApplaudioBuild extends Build {
     } )
 
   lazy val deploymentSettings = Seq(
+    assemblyJarName in assembly := s"Applaudio-$ApplaudioVersion.jar",
     test in assembly := {},
     assembly <<= assembly.dependsOn(grunt.toTask("deploy")) )
 
