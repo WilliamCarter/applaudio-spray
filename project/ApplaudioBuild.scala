@@ -37,6 +37,7 @@ object ApplaudioBuild extends Build {
     fullClasspath in Revolver.reStart <<= (fullClasspath in Revolver.reStart, baseDirectory) map { (classpath, base) =>
       Attributed.blank(base / "src" / "frontend") +: classpath
     },
+    javaOptions in Revolver.reStart += "-Dconfig.resource=dev.conf",
     testOptions in Test := Seq( Tests.Filter(_ startsWith "applaudio") ),
     shellPrompt := { state: State => "[applaudio] > " } )
 
@@ -55,8 +56,7 @@ object ApplaudioBuild extends Build {
 
   lazy val deploymentSettings = Seq(
     assemblyJarName in assembly := s"Applaudio-$ApplaudioVersion.jar",
-    test in assembly := {},
-    assembly <<= assembly.dependsOn(grunt.toTask("deploy")) )
+    test in assembly := {} )
 
   lazy val Applaudio = Project(
     id = "Applaudio",
