@@ -13,6 +13,7 @@ target/
 ## Server ##
 server
 pushtopi.sh
+unpack.sh
 
 # Certificates
 *.crt
